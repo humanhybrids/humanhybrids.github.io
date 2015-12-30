@@ -1,7 +1,77 @@
 <html>
-    <head>
-        <title>Cory Cook - Resume</title>
-    </head>
-    <body>
-    </body>
+
+<head>
+    <title>Cory Cook - Resume</title>
+    <script src="Template.js"></script>
+    <script src="EventModel.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Cory Cook</h1>
+        <address>
+            250 Josefa St. Apt. 203<br />
+            San Jose, CA 95110<br />
+            Phone: (408) 529-5070<br />
+            Email: <a href="mailto:corycook@ieee.org">corycook@ieee.org</a>
+        </address>
+    </header>
+
+    <h2>Work Experience</h2>
+    <script class="templated" type="application/json">
+    { 
+        "structure": ["ul", ["@", ["li", ["b", "@employer "], ["i", "@startdate to @enddate"], ["ul", ["@accomplishments", ["li", "@"]]]]]], 
+        "data": [ 
+            { 
+                "employer": "Intel Corpration", "startdate": "August 2014", "enddate": "December 2015", 
+                "accomplishments": [] 
+            }, 
+            { 
+                "employer": "New Classic Home Furnishings", "startdate": "April 2014", "enddate": "August 2014",
+                "accomplishments": [] }, 
+            { 
+                "employer": "California State University San Bernardino", "startdate": "April 2014", "enddate": "June 2014", 
+                "accomplishments": [] 
+            }
+        ]
+    }
+    </script>
+    
+    <h2>Education</h2>
+    <script class="templated" type="application/json">
+    {
+        "structure": ["ul", ["@", ["li", ["b", "@name "], ["time", "@startdate to @enddate"], ["div", "@degree in @major, @GPA"]]]],
+        "data": [
+            { 
+                "name": "San Jose State University", "degree": "Master of Science", "GPA": 3.75,
+                "major": "Computer Science", "startdate": "August 2014", "enddate": "May 2016" 
+            },
+            { 
+                "name": "California State University San Bernardino", "degree": "Bachelor of Science", "GPA": 3.3,
+                "major": "Computer Science", "startdate": "August 2010", "enddate": "June 2014"
+            },
+            { 
+                "name": "California State University San Bernardino", "degree": "Bachelor of Science", "GPA": 3.2,
+                "major": "Computer Engineering", "startdate": "August 2010", "enddate": "June 2014"
+            }
+        ]
+    }
+    </script>
+        
+    <script>
+        var model = new EventModel({
+            ".templated": {
+                "bound": function(event, model) {
+                    var content = JSON.parse(this.innerText);
+                    var template = new Template(content.structure);
+                    this.parentElement.insertBefore(template.create(content.data), this);
+                }
+            }
+        });
+        model.bind();
+    </script>
+        
+</body>
+
+
 </html>
