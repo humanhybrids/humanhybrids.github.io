@@ -4,14 +4,93 @@
     <title>Cory Cook - Resume</title>
     <script src="Template.js"></script>
     <script src="EventModel.js"></script>
-    <script type="text/javascript" src="//platform.linkedin.com/in.js">
+    <!--<script type="text/javascript" src="//platform.linkedin.com/in.js">
         api_key:   75nlt470sm98dr
+    </script>-->
+    <script id="data" type="application/json">
+        {
+            "firstName": "Cory",
+            "lastName": "Cook",
+            "positions": [
+                {
+                    "title": "Software Engineer Intern",
+                    "summary": "",
+                    "startDate": "August 2014",
+                    "endDate": "December 2015",
+                    "companyName": "Intel Corporation"
+                },
+                {
+                    "title": "Software Engineer",
+                    "summary": "",
+                    "startDate": "April 2014",
+                    "endDate": "August 2014",
+                    "companyName": "New Classic Home Furnishings"
+                },
+                {
+                    "title": "Process Control Engineer Intern",
+                    "summary": "",
+                    "startDate": "July 2012",
+                    "endDate": "June 2014",
+                    "companyName": "California Steel Industries, Inc."
+                }
+            ],
+            "educations": [
+                {
+                    "schoolName": "San Jose State University",
+                    "fieldOfStudy": "Computer Science",
+                    "startDate": "August 2014",
+                    "endDate": "May 2016",
+                    "degree": "Master of Science",
+                    "gpa": 3.75
+                },
+                {
+                    "schoolName": "California State University San Bernardino",
+                    "fieldOfStudy": "Computer Science",
+                    "startDate": "August 2010",
+                    "endDate": "May 2014",
+                    "degree": "Bachelor of Science",
+                    "gpa": 3.3
+                },
+                {
+                    "schoolName": "California State University San Bernardino",
+                    "fieldOfStudy": "Computer Engineering",
+                    "startDate": "August 2010",
+                    "endDate": "May 2014",
+                    "degree": "Bachelor of Science",
+                    "gpa": 3.2
+                }
+            ],
+            "skills": [
+                { "name": "JavaScript", "proficiency": 5 }, 
+                { "name": "C#", "proficiency": 5 }, 
+                { "name": "C++", "proficiency": 4 }, 
+                { "name": "Python", "proficiency": 4 } 
+            ]
+        }
     </script>
+    
+    <style>
+        ul {
+            list-style: none outside;
+            padding: 0;
+        }
+        
+        .skill {
+            padding: .2em;
+        }
+        
+        body {
+            margin: auto;
+            width: 600px;
+        }
+    </style>
 </head>
 
 <body>
+    
     <header>
         <h1>Cory Cook</h1>
+        
         <address>
             250 Josefa St. Apt. 203<br />
             San Jose, CA 95110<br />
@@ -19,59 +98,54 @@
             Email: <a href="mailto:corycook@ieee.org">corycook@ieee.org</a>
         </address>
     </header>
-
-    <h2>Work Experience</h2>
-    <script class="templated" type="application/json">
-    { 
-        "structure": ["ul", ["@", ["li", ["b", "@employer "], ["i", "@startdate to @enddate"], ["ul", ["@accomplishments", ["li", "@"]]]]]], 
-        "data": [ 
-            { 
-                "employer": "Intel Corpration", "startdate": "August 2014", "enddate": "December 2015", 
-                "accomplishments": [] 
-            }, 
-            { 
-                "employer": "New Classic Home Furnishings", "startdate": "April 2014", "enddate": "August 2014",
-                "accomplishments": [] }, 
-            { 
-                "employer": "California State University San Bernardino", "startdate": "April 2014", "enddate": "June 2014", 
-                "accomplishments": [] 
-            }
-        ]
-    }
-    </script>
     
-    <h2>Education</h2>
-    <script class="templated" type="application/json">
-    {
-        "structure": ["ul", ["@", ["li", ["b", "@name "], ["time", "@startdate to @enddate"], ["div", "@degree in @major, @GPA"]]]],
-        "data": [
-            { 
-                "name": "San Jose State University", "degree": "Master of Science", "GPA": 3.75,
-                "major": "Computer Science", "startdate": "August 2014", "enddate": "May 2016" 
-            },
-            { 
-                "name": "California State University San Bernardino", "degree": "Bachelor of Science", "GPA": 3.3,
-                "major": "Computer Science", "startdate": "August 2010", "enddate": "June 2014"
-            },
-            { 
-                "name": "California State University San Bernardino", "degree": "Bachelor of Science", "GPA": 3.2,
-                "major": "Computer Engineering", "startdate": "August 2010", "enddate": "June 2014"
-            }
-        ]
-    }
-    </script>
+    <main>
+        <h2>Work Experience</h2>
+        <script type="application/json" data-item="positions">
+            ["ul", ["@", ["li", ["b", "@title"], ["i", { "style": "float: right" }, "@startDate - @endDate"], ["div", "@companyName"], ["div", "@summary"]]]] 
+        </script>
         
+        <h2>Education</h2>
+        <script type="application/json" data-item="educations">
+            ["ul", ["@", ["li", ["b", "@schoolName"], ["i", { "style": "float: right" }, "@startDate - @endDate"], ["div", "@degree in @fieldOfStudy, @gpa"]]]]
+        </script>
+        
+        <h2>Skills</h2>
+        <script type="application/json" data-item="skills">
+            ["div", ["@", ["span", { "class": "skill", "title": "proficiency: @proficiency / 5" }, "@name"]]]
+        </script>
+    </main>
+    
     <script>
+        Object.defineProperty(XMLHttpRequest.prototype, "onsuccess", 
+        { 
+            set: function(callback) {
+                this.onreadystatechange = (function(event) {
+                    if (this.readyState == 4 && this.status == 200)
+                        callback.call(this, event);
+                }).bind(this);
+            }
+        });
+        
+        var data = JSON.parse(document.getElementById('data').innerText);
         var model = new EventModel({
-            ".templated": {
-                "bound": function(event, model) {
-                    var content = JSON.parse(this.innerText);
-                    var template = new Template(content.structure);
-                    this.parentElement.insertBefore(template.create(content.data), this);
+            "[data-item]": {
+                "databind": function(event, model) {
+                    var item = this.getAttribute("data-item");
+                    var list = event.data[item];
+                    var t = new Template(JSON.parse(this.innerText));
+                    this.parentElement.insertBefore(t.create(list), this);
                 }
             }
         });
         model.bind();
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "data.json");
+        xhr.onsuccess = function() { model.databind(xhr.response); }
+        xhr.send();
+        
+        model.databind(data);
     </script>
         
 </body>

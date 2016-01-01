@@ -68,9 +68,14 @@
                 var name = structure[0].substring(1);
                 var items = name == '' ? data : data[name];
                 var fragment = document.createDocumentFragment();
-                for (var i = 0; i < items.length; i++)
-                    for (var j = 1; j < structure.length; j++)
-                        handle(fragment, structure[j], items[i]);
+                if (type(items) == types.array) {
+                    for (var i = 0; i < items.length; i++)
+                        for (var j = 1; j < structure.length; j++)
+                            handle(fragment, structure[j], items[i]);
+                } else {
+                    for (var i = 1; i < structure.length; i++)
+                        handle(fragment, structure[i], items);
+                }
                 return fragment;
             } else {
                 var element = document.createElement(structure[0]);
