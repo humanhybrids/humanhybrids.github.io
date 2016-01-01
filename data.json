@@ -49,5 +49,23 @@
             "degree": "Bachelor of Science",
             "gpa": 3.2
         }
+    ],
+    "skills": [
+        {
+            "name": "JavaScript",
+            "proficiency": 5
+        },
+        {
+            "name": "C#",
+            "proficiency": 5
+        },
+        {
+            "name": "C++",
+            "proficiency": 4
+        },
+        {
+            "name": "Python",
+            "proficiency": 4
+        }
     ]
 }
