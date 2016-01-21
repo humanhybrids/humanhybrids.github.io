@@ -2,26 +2,8 @@
 
 <head>
     <title>Cory Cook - Resume</title>
-    <script src="Template.js"></script>
-    <script src="EventModel.js"></script>
-    <script type="text/javascript" src="//platform.linkedin.com/in.js">
-        api_key:   75nlt470sm98dr
-    </script>
-    <style>
-        ul {
-            list-style: none outside;
-            padding: 0;
-        }
-        
-        .skill {
-            padding: .2em;
-        }
-        
-        body {
-            margin: auto;
-            width: 675px;
-        }
-    </style>
+    <link href="css/main.css" rel="stylesheet" />
+    <script src="js/amd.js"></script>
 </head>
 
 <body>
@@ -56,28 +38,24 @@
     </main>
 
     <script>
-        var model = new EventModel({
-            "[data-item]": {
-                "databind": function(event, model) {
-                    var item = this.getAttribute("data-item");
-                    var list = event.data[item];
-                    var t = new Template(JSON.parse(this.innerText));
-                    this.parentElement.insertBefore(t.create(list), this);
+        require(["eventmodel", "template", "data"], function(EventModel, Template, data) {
+                
+            var model = new EventModel({
+                "[data-item]": {
+                    databind: function(event, model) {
+                        var item = this.getAttribute("data-item");
+                        var list = event.data[item];
+                        var t = new Template(JSON.parse(this.innerText));
+                        this.parentElement.insertBefore(t.create(list), this);
+                    }
                 }
-            }
+            });
+            model.bind();
+            model.databind(data.resume);
+            
         });
-        model.bind();
-        
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "data.json");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) 
-                model.databind(JSON.parse(xhr.responseText));
-        }
-        xhr.send();
     </script>
 
 </body>
-
 
 </html>

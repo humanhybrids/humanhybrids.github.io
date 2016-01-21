@@ -1,10 +1,16 @@
 "use strict";
 
-(function (global) {
-
-    function type(obj) {
-        return Object.prototype.toString.call(obj);
+(function(g, factory) {
+    
+    if (typeof define !== "undefined") {
+        define(factory);
+    } else {
+        g.Template = factory();
     }
+     
+})(this, function () {
+
+    function type(obj) { return Object.prototype.toString.call(obj); }
 
     var types = {
         function: "[object Function]",
@@ -92,6 +98,6 @@
 
     }).call(Template.prototype);
 
-    global.Template = Template;
+    return Template;
 
-} (window));
+});
