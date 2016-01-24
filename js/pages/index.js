@@ -17,9 +17,9 @@ define(["page", "eventmodel", "template"], function (Page, EventModel, Template)
         ".link-about": {
             "click": function (event, model) {
                 event.preventDefault();
-                require(["pages/about"], function(p) {
-                    p.render();
-                    history.pushState({ }, "About", "#/about");
+                require(["pages/about"], function(page) {
+                    page.render();
+                    history.pushState(page.state, "About", "#/about");
                 });
                 
             }

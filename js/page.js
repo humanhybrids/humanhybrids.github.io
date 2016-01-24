@@ -4,6 +4,7 @@ define(["fn", "eventmodel"], function (fn, EventModel) {
     function Page() {
         this.content = {};
         this.callbacks = [];
+        this.state = { id: Math.random() };
     }
 
     (function () {
