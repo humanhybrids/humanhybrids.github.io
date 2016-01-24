@@ -36,7 +36,6 @@ define(["page", "template", "eventmodel"], function (Page, Template, EventModel)
 
     self.onrender(function () {
         model.bind();
-        history.pushState(self.state, "About", "#/about");
     });
 
     return self;

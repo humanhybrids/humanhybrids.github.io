@@ -25,7 +25,6 @@ define(["page", "eventmodel", "template"], function (Page, EventModel, Template)
 
     self.onrender(function () {
         model.bind();
-        history.pushState(self.state, "Index", "#/index");
     });
 
     return self;
