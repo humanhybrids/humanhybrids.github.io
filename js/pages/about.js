@@ -8,7 +8,7 @@ define(["page", "template", "eventmodel"], function (Page, Template, EventModel)
     };
 
     var main = new Template(["div", ["h2", "About"],
-        ["p", "This site is built using only JavaScript libraries that I developed: "],
+        ["p", "This site is built using only JavaScript libraries that I developed:"],
         ["ul", ["li", ["a", "amd.js", { "href": "js/amd.js" }],
             ": This is my own implementation of AMD (Asynchronous Module Definition)."],
             ["li", ["a", "fn.js", { "href": "js/fn.js" }],
@@ -26,10 +26,8 @@ define(["page", "template", "eventmodel"], function (Page, Template, EventModel)
     var model = new EventModel({
         ".link-index": {
             "click": function (event, model) {
-                event.preventDefault();
                 require(["pages/index"], function (page) {
                     page.render();
-                    history.pushState(page.state, "Index", "#/index");
                 });
             }
         }
@@ -37,6 +35,7 @@ define(["page", "template", "eventmodel"], function (Page, Template, EventModel)
 
     self.onrender(function () {
         model.bind();
+        history.pushState(self.state, "About", "#/about");
     });
 
     return self;

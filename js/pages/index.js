@@ -16,20 +16,19 @@ define(["page", "eventmodel", "template"], function (Page, EventModel, Template)
     var model = new EventModel({
         ".link-about": {
             "click": function (event, model) {
-                event.preventDefault();
-                require(["pages/about"], function(page) {
+                require(["pages/about"], function (page) {
                     page.render();
-                    history.pushState(page.state, "About", "#/about");
                 });
-                
+
             }
         }
     });
 
     self.onrender(function () {
         model.bind();
+        history.pushState(self.state, "Index", "");
     });
-    
+
     return self;
 
 });
