@@ -28,6 +28,7 @@
             require(["pages/" + name], p => p.render());
         }
         window.onload = onLoad;
+        window.onhashchange = onLoad;
     </script>
 
 </body>
