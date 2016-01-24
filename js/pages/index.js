@@ -4,13 +4,13 @@ define(["page", "eventmodel", "template"], function (Page, EventModel, Template)
     var self = new Page();
 
     var links = {
-        about: ["a", { "class": "link-about", "href": "#about" }, "About"]
+        about: ["a", { "class": "link-about", "href": "#/about" }, "About"]
     };
 
     var main = new Template(["div", ["h2", "Welcome!"], links.about]);
-    var nav = new Template(links.about);
-
     self.setcontent("main", main.create());
+
+    var nav = new Template(links.about);
     self.setcontent("nav", nav.create());
 
     var model = new EventModel({
@@ -19,7 +19,6 @@ define(["page", "eventmodel", "template"], function (Page, EventModel, Template)
                 require(["pages/about"], function (page) {
                     page.render();
                 });
-
             }
         }
     });
