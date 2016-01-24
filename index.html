@@ -24,8 +24,10 @@
 
     <script>
         function onLoad() {
-            var name = window.location.hash.substring(1) || "/index";
-            require(["pages" + name], p => p.render());
+            var name = window.location.hash.substring(1) || "index";
+            if (name[0] == "/")
+                name = name.substring(1);
+            require(["pages/" + name], p => p.render());
         }
         window.onload = onLoad;
         window.onhashchange = onLoad;
