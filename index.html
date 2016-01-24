@@ -23,8 +23,11 @@
     </main>
 
     <script>
-        var name = window.location.hash.substring(1) || "index";
-        require(["pages/" + name], p => p.render());
+        function onLoad() {
+            var name = window.location.hash.substring(1) || "index";
+            require(["pages/" + name], p => p.render());
+        }
+        window.onload = onLoad;
     </script>
 
 </body>
