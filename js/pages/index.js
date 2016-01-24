@@ -25,6 +25,7 @@ define(["page", "eventmodel", "template"], function (Page, EventModel, Template)
 
     self.onrender(function () {
         model.bind();
+        document.title = "Index";
     });
 
     return self;

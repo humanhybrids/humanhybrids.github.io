@@ -36,6 +36,7 @@ define(["page", "template", "eventmodel"], function (Page, Template, EventModel)
 
     self.onrender(function () {
         model.bind();
+        document.title = "About";
     });
 
     return self;
