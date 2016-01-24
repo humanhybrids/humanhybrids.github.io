@@ -1,0 +1,14 @@
+
+ul {
+    list-style: none outside;
+    padding: 0;
+}
+
+.skill {
+    padding: .2em;
+}
+
+body {
+    margin: auto;
+    width: 675px;
+}

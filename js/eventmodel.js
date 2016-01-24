@@ -227,7 +227,7 @@
         }
 
     }).call(EventModel.prototype)
-    
+
     return EventModel;
 
 });

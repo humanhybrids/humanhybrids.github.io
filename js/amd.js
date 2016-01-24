@@ -15,19 +15,26 @@
     function Module(name) {
         this.name = name;
         this.isdefined = false;
+        this.callbacks = [];
     }
 
     (function () {
-        this.define = function define(factory) {
-            this.factory = factory;
-            this.isdefined = true;
-            if ("ondefine" in this)
-                this.ondefine();
-        };
+        function _defined(module) {
+            module.callbacks.forEach(function(fn) {
+                fn.call(module);
+            });
+        }
 
-        this.args = function args(list) {
-            this.list = list;
-        };
+        this.define = fn.overload(
+            fn.create(Array, Function, function (list, factory) {
+                this.list = list;
+                this.define(factory);
+            }),
+            function (factory) {
+                this.factory = factory;
+                this.isdefined = true;
+                _defined(this);
+            });
 
         var make = fn.overload(
             fn.create(Function, Function, Array, function (callback, factory, list) {
@@ -38,13 +45,13 @@
             fn.create(Function, Function, function (callback, factory) {
                 callback(factory());
             }),
-            function (callback, object) {
+            fn.create(Function, function (callback, object) {
                 callback(object);
-            });
+            }));
 
-        this.create = function create(callback) {
+        this.create = function (callback) {
             if (!this.isdefined) {
-                this.ondefine = function () { make(callback, this.factory, this.list); };
+                this.callbacks.push(function () { make(callback, this.factory, this.list); });
                 document.head.insertBefore(this.script, tag);
             } else {
                 make(callback, this.factory, this.list);
@@ -73,7 +80,7 @@
             modules[name].create(function (module) {
                 args[name] = module;
                 if (--ct == 0)
-                    fn.apply(this, list.map(x => args[x]));
+                    fn.apply(this, list.map(function (x) { return args[x]; }));
             });
         });
     };
@@ -81,20 +88,18 @@
     function getName() {
         var t = document.currentScript;
         var src = t.getAttribute("src");
-        return src.substring(src.lastIndexOf("\/") + 1, src.length - 3);
+        return src.substring(root.length, src.length - 3);
     }
 
     this.define = fn.overload(
         fn.create(Array, Function, function (list, factory) {
             var name = getName();
-            modules[name].args(list);
-            modules[name].define(factory);
+            modules[name].define(list, factory);
         }),
-        fn.create(String, Array, Function, function(name, list, factory) {
+        fn.create(String, Array, Function, function (name, list, factory) {
             if (!(name in modules))
                 modules[name] = new Module(name);
-            modules[name].args(list);
-            modules[name].define(factory);
+            modules[name].define(list, factory);
         }),
         fn.create(String, function (name, factory) {
             if (!(name in modules))
