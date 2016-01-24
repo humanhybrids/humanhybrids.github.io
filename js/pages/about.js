@@ -26,6 +26,7 @@ define(["page", "template", "eventmodel"], function (Page, Template, EventModel)
     var model = new EventModel({
         ".link-index": {
             "click": function (event, model) {
+                event.preventDefault();
                 require(["pages/index"], function (page) {
                     page.render();
                     history.pushState(page.state, "Index", "#/index");
