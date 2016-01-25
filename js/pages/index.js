@@ -1,34 +1,21 @@
 
-define(["page", "eventmodel", "template"], function (Page, EventModel, Template) {
+define(["page", "eventmodel", "template", "components/nav"],
+    function (Page, EventModel, Template, nav) {
+        var self = new Page();
 
-    var self = new Page();
+        var links = {
+            about: ["a", { "class": "link-about", "href": "#/about" }, "About"]
+        };
 
-    var links = {
-        about: ["a", { "class": "link-about", "href": "#/about" }, "About"]
-    };
+        var main = new Template(["div", ["h2", "Welcome!"], links.about]);
 
-    var main = new Template(["div", ["h2", "Welcome!"], links.about]);
-    self.setcontent("main", main.create());
+        self.setcontent("main", main.create());
+        self.setcontent("nav", nav);
 
-    var nav = new Template(links.about);
-    self.setcontent("nav", nav.create());
+        self.onrender(function () {
+            document.title = "Index";
+        });
 
-    var model = new EventModel({
-        ".link-about": {
-            "click": function (event, model) {
-                require(["pages/about"], function (page) {
-                    page.render();
-                });
-            }
-        }
+        return self;
     });
-
-    self.onrender(function () {
-        model.bind();
-        document.title = "Index";
-    });
-
-    return self;
-
-});
 

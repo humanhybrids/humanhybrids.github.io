@@ -20,7 +20,7 @@
 
     (function () {
         function _defined(module) {
-            module.callbacks.forEach(function(fn) {
+            module.callbacks.forEach(function (fn) {
                 fn.call(module);
             });
         }
