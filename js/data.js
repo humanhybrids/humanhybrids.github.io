@@ -2,7 +2,22 @@ define({
     resume: {
         "firstName": "Cory",
         "lastName": "Cook",
+        "address": {
+            "street": "250 Josefa St Apt 203",
+            "city": "San Jose",
+            "state": "CA",
+            "zip": "95110"
+        },
+        "phone": "(408) 529-5070",
+        "email": "corycook@ieee.org",
         "positions": [
+            {
+                "title": "Software Developer",
+                "summary": "",
+                "startDate": "January 2016",
+                "endDate": "Current",
+                "companyName": "IBM"
+            },
             {
                 "title": "Software Engineer Intern",
                 "summary": "",

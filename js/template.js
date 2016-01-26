@@ -1,13 +1,13 @@
 "use strict";
 
-(function(g, factory) {
-    
+(function (g, factory) {
+
     if (typeof define !== "undefined") {
         define(factory);
     } else {
         g.Template = factory();
     }
-     
+
 })(this, function () {
 
     function type(obj) { return Object.prototype.toString.call(obj); }
@@ -33,7 +33,7 @@
         function get(str, data) {
             if (str == '@') return data;
             return str.replace(/@\(?(\w+)\)?/g, function (match, name) {
-                return name in data ? data[name] : match;
+                return name in (data || {}) ? data[name] : match;
             });
         }
 
