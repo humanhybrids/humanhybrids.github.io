@@ -1,5 +1,5 @@
 
-define(["page", "template", "data"], function (Page, Template, data) {
+define(["core/page", "template", "data"], function (Page, Template, data) {
     var self = new Page();
 
     var positions = ["li", ["b", "@title"],

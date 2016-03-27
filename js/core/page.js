@@ -1,5 +1,5 @@
 
-require(["fn", "eventmodel"], function (fn, EventModel) {
+require(["fn", "eventmodel", "define"], function (fn, EventModel, define) {
     var model = new EventModel({
         "[data-content]": {
             "setcontent": function (event, model) {
@@ -14,7 +14,8 @@ require(["fn", "eventmodel"], function (fn, EventModel) {
     });
     model.bind();
 
-    define("page", function () {
+    define("core/page", function () {
+
         function Page() {
             this.content = {};
             this.callbacks = [];
@@ -33,15 +34,17 @@ require(["fn", "eventmodel"], function (fn, EventModel) {
                 _onrender(this);
             };
 
-            this.setcontent = fn.create(String, Node, function (id, content) {
+            this.setcontent = fn([String, Node], function (id, content) {
                 this.content[id] = content;
             });
 
-            this.onrender = fn.create(Function, function (fn) {
+            this.onrender = fn([Function], function (fn) {
                 this.callbacks.push(fn);
             });
         }).call(Page.prototype);
 
         return Page;
+
     });
+
 });

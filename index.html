@@ -19,14 +19,11 @@
     <main data-content="main"></main>
 
     <script>
-        function onLoad() {
-            var name = window.location.hash.substring(1) || "index";
-            if (name[0] == "/")
-                name = name.substring(1);
-            require(["pages/" + name], p => p.render());
-        }
-        window.onload = onLoad;
-        window.onhashchange = onLoad;
+        window.onhashchange = window.onload = function() { 
+            require(["pages" + window.location.hash.substring(1) || "/index"], function(p) {
+                p.render();
+            });
+        };
     </script>
 
 </body>

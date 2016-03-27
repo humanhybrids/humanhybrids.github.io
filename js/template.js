@@ -2,8 +2,8 @@
 
 (function (g, factory) {
 
-    if (typeof define !== "undefined") {
-        define(factory);
+    if (typeof g.define !== "undefined") {
+        g.define(factory);
     } else {
         g.Template = factory();
     }

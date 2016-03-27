@@ -1,5 +1,5 @@
 
-define(["page", "eventmodel", "template", "components/nav"],
+define(["core/page", "eventmodel", "template", "components/nav"],
     function (Page, EventModel, Template, nav) {
         var self = new Page();
 
