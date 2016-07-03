@@ -78,27 +78,37 @@
             this.pressed = {};
             this.ship = null;
             this.asteroids = [];
+            this.projectiles = [];
 
             var straight = new Vector(0, 5);
             this.handlers = {
-                a: function() {
+                KeyA: function() {
                     this.ship.angle -= 0.1;
                 },
-                d: function() {
+                KeyD: function() {
                     this.ship.angle += 0.1;
                 },
-                w: function() {
+                KeyW: function() {
                     var ship = this.ship;
                     ship.velocity = ship.velocity.addVector(straight.rotate(ship.angle));
                 },
-                s: function() {
+                KeyS: function() {
                     var ship = this.ship;
                     ship.velocity = ship.velocity.addVector(straight.multiplyScalar(-1).rotate(ship.angle));
+                },
+                Space: function() {
+                    this.projectiles.push(this._createProjectile());
                 }
             }
         }
 
         Environment.prototype = {
+            isOutOfBounds: function(r) {
+                var maxx = this.canvas.width;
+                var maxy = this.canvas.height;
+                var pos = r.position;
+                return pos.x < 0 || pos.x > maxx || pos.y < 0 || pos.y > maxy;
+            },
             checkBounds: function(r) {
                 var maxx = this.canvas.width;
                 var maxy = this.canvas.height;
@@ -121,7 +131,6 @@
             },
             begin: function() {
                 var pressed = this.pressed;
-                var canvas = this.canvas;
                 window.addEventListener("resize", this._onWindowResize.bind(this));
                 this._onWindowResize();
 
@@ -131,10 +140,10 @@
                 }
 
                 window.addEventListener("keydown", function(event) {
-                    pressed[event.key] = true;
+                    pressed[event.code] = true;
                 });
                 window.addEventListener("keyup", function(event) {
-                    delete pressed[event.key];
+                    delete pressed[event.code];
                 });
                 requestAnimationFrame(this.cycle);
             },
@@ -156,6 +165,14 @@
                         this.updateProperties(asteroid, elapsed);
                         this.checkBounds(asteroid);
                         asteroid.render(this.context);
+                    }, this);
+
+                    this.projectiles.forEach(function(projectile, index) {
+                        this.updateProperties(projectile, elapsed);
+                        projectile.render(this.context);
+                        if (this.isOutOfBounds(projectile)) {
+                            this.projectiles.splice(index, 1);
+                        }
                     }, this);
                     ship.render(this.context);
                 }
@@ -201,6 +218,20 @@
                     path[i] = path[i].multiplyScalar(1 + 0.8 * Math.random());
                 }
                 return asteroid;
+            },
+            _createProjectile: function() {
+                var ship = this.ship;
+                var front = ship.path[0].rotate(ship.angle);
+                return new RenderableObject({
+                    path: [
+                        new Vector(2, 2),
+                        new Vector(-2, 2),
+                        new Vector(-2, -2),
+                        new Vector(2, -2)
+                    ],
+                    position: ship.position.addVector(front),
+                    velocity: front.multiplyScalar(20)
+                });
             }
         };
 
