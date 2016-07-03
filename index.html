@@ -104,10 +104,10 @@
 
         Environment.prototype = {
             isOutOfBounds: function(r) {
-                var maxx = this.canvas.width;
-                var maxy = this.canvas.height;
-                var pos = r.position;
-                return pos.x < 0 || pos.x > maxx || pos.y < 0 || pos.y > maxy;
+                var canvas = this.canvas;
+                var x = r.position.x;
+                var y = r.position.y;
+                return x < 0 || x > canvas.width || y < 0 || y > canvas.height;
             },
             checkBounds: function(r) {
                 var maxx = this.canvas.width;
@@ -152,21 +152,29 @@
                 var time = this._time;
                 if (time) {
                     var elapsed = (timestamp - time) / 1000;
-                    var ship = this.ship;
-                    var asteroid = this.asteroid;
+
+                    // handle input
                     for (var key in this.pressed) {
                         var handler = this.handlers[key];
                         handler && handler.call(this);
                     }
+
+                    // clear the canvas
                     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                    this.updateProperties(ship, elapsed);
-                    this.checkBounds(ship);
+
+                    // update the ship
+                    this.updateProperties(this.ship, elapsed);
+                    this.checkBounds(this.ship);
+                    this.ship.render(this.context);
+
+                    // update the asteroids
                     this.asteroids.forEach(function(asteroid) { 
                         this.updateProperties(asteroid, elapsed);
                         this.checkBounds(asteroid);
                         asteroid.render(this.context);
                     }, this);
 
+                    // update projectiles
                     this.projectiles.forEach(function(projectile, index) {
                         this.updateProperties(projectile, elapsed);
                         projectile.render(this.context);
@@ -174,7 +182,6 @@
                             this.projectiles.splice(index, 1);
                         }
                     }, this);
-                    ship.render(this.context);
                 }
                 this._time = timestamp;
             },
@@ -230,7 +237,7 @@
                         new Vector(2, -2)
                     ],
                     position: ship.position.addVector(front),
-                    velocity: front.multiplyScalar(20)
+                    velocity: ship.velocity.addVector(front.multiplyScalar(20))
                 });
             }
         };
