@@ -3,29 +3,210 @@
 <html>
 
 <head>
-    <title>Cory Cook</title>
-    <script src="js/amd.js"></script>
-    <link href="css/main.css" rel="stylesheet" />
+    <title>Asteroids</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 
 <body>
-
-    <header>
-        <logo><a href="/">Cory Cook</a></logo>
-        <nav data-content="nav"></nav>
-        <span data-content="header"></span>
-    </header>
-
-    <main data-content="main"></main>
+    <canvas id="canvas"></canvas>
 
     <script>
-        window.onhashchange = window.onload = function() { 
-            require(["pages" + window.location.hash.substring(1) || "/index"], function(p) {
-                p.render();
-            });
-        };
-    </script>
+        function Vector(x, y) {
+            this.x = x;
+            this.y = y;
+        }
 
+        Vector.prototype = {
+            rotate: function(angle) {
+                var sina = Math.sin(angle);
+                var cosa = Math.cos(angle);
+                return new Vector(
+                    this.x * cosa - this.y * sina,
+                    this.y * cosa + this.x * sina
+                );
+            },
+            addVector: function(vec) {
+                return new Vector(
+                    this.x + vec.x,
+                    this.y + vec.y
+                );
+            },
+            multiplyScalar: function(scalar) {
+                return new Vector(
+                    this.x * scalar,
+                    this.y * scalar
+                );
+            }
+        };
+
+        function RenderableObject(init) {
+            this.position = new Vector(0, 0);
+            this.velocity = new Vector(0, 0);
+            this.acceleration = new Vector(0, 0);
+            this.angle = 0;
+            this.omega = 0; // angular velocity
+            this.path = [];
+            Object.assign(this, init);
+        }
+
+        RenderableObject.prototype = {
+            render: function(ctx) {
+                var angle = this.angle;
+                var path = this.path;
+                var pos = this.position;
+                var pt = path[0].rotate(angle).addVector(pos);
+                ctx.beginPath();
+                ctx.moveTo(pt.x, pt.y);
+                for (var i = 1; i < path.length; i++) {
+                    pt = path[i].rotate(angle).addVector(pos);
+                    ctx.lineTo(pt.x, pt.y);
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+        };
+
+        function Environment(canvas) {
+            this.canvas = canvas;
+            this.context = canvas.getContext("2d");
+            this._time = null;
+            this.cycle = this._cycle.bind(this);
+            this.pressed = {};
+            this.ship = null;
+            this.asteroids = [];
+
+            var straight = new Vector(0, 5);
+            this.handlers = {
+                a: function() {
+                    this.ship.angle -= 0.1;
+                },
+                d: function() {
+                    this.ship.angle += 0.1;
+                },
+                w: function() {
+                    var ship = this.ship;
+                    ship.velocity = ship.velocity.addVector(straight.rotate(ship.angle));
+                },
+                s: function() {
+                    var ship = this.ship;
+                    ship.velocity = ship.velocity.addVector(straight.multiplyScalar(-1).rotate(ship.angle));
+                }
+            }
+        }
+
+        Environment.prototype = {
+            checkBounds: function(r) {
+                var maxx = this.canvas.width;
+                var maxy = this.canvas.height;
+                var pos = r.position;
+                if (pos.x < 0) {
+                    pos.x = maxx;
+                } else if (pos.x > maxx) {
+                    pos.x = 0;
+                }
+                if (pos.y < 0) {
+                    pos.y = maxy;
+                } else if (pos.y > maxy) {
+                    pos.y = 0;
+                }
+            },
+            updateProperties: function(r, elapsed) {
+                r.velocity = r.velocity.addVector(r.acceleration.multiplyScalar(elapsed));
+                r.position = r.position.addVector(r.velocity.multiplyScalar(elapsed));
+                r.angle += r.omega;
+            },
+            begin: function() {
+                var pressed = this.pressed;
+                var canvas = this.canvas;
+                window.addEventListener("resize", this._onWindowResize.bind(this));
+                this._onWindowResize();
+
+                this.ship = this._createShip();
+                for (var i = 0; i < 10; i++) {
+                    this.asteroids.push(this._createAsteroid());
+                }
+
+                window.addEventListener("keydown", function(event) {
+                    pressed[event.key] = true;
+                });
+                window.addEventListener("keyup", function(event) {
+                    delete pressed[event.key];
+                });
+                requestAnimationFrame(this.cycle);
+            },
+            _cycle: function(timestamp) {
+                requestAnimationFrame(this.cycle);
+                var time = this._time;
+                if (time) {
+                    var elapsed = (timestamp - time) / 1000;
+                    var ship = this.ship;
+                    var asteroid = this.asteroid;
+                    for (var key in this.pressed) {
+                        var handler = this.handlers[key];
+                        handler && handler.call(this);
+                    }
+                    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.updateProperties(ship, elapsed);
+                    this.checkBounds(ship);
+                    this.asteroids.forEach(function(asteroid) { 
+                        this.updateProperties(asteroid, elapsed);
+                        this.checkBounds(asteroid);
+                        asteroid.render(this.context);
+                    }, this);
+                    ship.render(this.context);
+                }
+                this._time = timestamp;
+            },
+            _onWindowResize: function() {
+                var canvas = this.canvas;
+                canvas.width = window.innerWidth - 40;
+                canvas.height = window.innerHeight - 40;
+            },
+            _createShip: function() {
+                var canvas = this.canvas;
+                return new RenderableObject({
+                    path: [
+                        new Vector(0, 20),
+                        new Vector(-10, -15),
+                        new Vector(-5, -10),
+                        new Vector(5, -10),
+                        new Vector(10, -15)
+                    ],
+                    position: new Vector(canvas.width / 2, canvas.height / 2)
+                });
+            },
+            _createAsteroid: function() {
+                var canvas = this.canvas;
+                var path = [
+                        new Vector(-30, 10),
+                        new Vector(-10, 30),
+                        new Vector(10, 30),
+                        new Vector(30, 10),
+                        new Vector(30, -10),
+                        new Vector(10, -30),
+                        new Vector(-10, -30),
+                        new Vector(-30, -10)
+                    ];
+                var asteroid = new RenderableObject({
+                    path: path,
+                    position: new Vector(Math.random() * canvas.width, Math.random() * canvas.height),
+                    velocity: new Vector(2 * (Math.random() - 1) * 100, 2 * (Math.random() - 1) * 100),
+                    omega: Math.random() * 0.1
+                });
+                for (var i = 0; i < path.length; i++) {
+                    path[i] = path[i].multiplyScalar(1 + 0.8 * Math.random());
+                }
+                return asteroid;
+            }
+        };
+
+        var env = new Environment(document.getElementById("canvas"));
+        env.begin();
+    </script>
 </body>
 
 </html>
