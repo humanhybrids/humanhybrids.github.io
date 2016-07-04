@@ -54,15 +54,15 @@
         }
 
         RenderableObject.prototype = {
-            render: function(ctx) {
+            render: function(ctx, res) {
                 var angle = this.angle;
                 var path = this.path;
                 var pos = this.position;
-                var pt = path[0].rotate(angle).addVector(pos);
+                var pt = path[0].rotate(angle).addVector(pos).multiplyScalar(res);
                 ctx.beginPath();
                 ctx.moveTo(pt.x, pt.y);
                 for (var i = 1; i < path.length; i++) {
-                    pt = path[i].rotate(angle).addVector(pos);
+                    pt = path[i].rotate(angle).addVector(pos).multiplyScalar(res);
                     ctx.lineTo(pt.x, pt.y);
                 }
                 ctx.closePath();
@@ -79,6 +79,8 @@
             this.ship = null;
             this.asteroids = [];
             this.projectiles = [];
+            this.width = 1080;
+            this.height = 1080;
 
             var straight = new Vector(0, 5);
             this.handlers = {
@@ -104,14 +106,13 @@
 
         Environment.prototype = {
             isOutOfBounds: function(r) {
-                var canvas = this.canvas;
                 var x = r.position.x;
                 var y = r.position.y;
-                return x < 0 || x > canvas.width || y < 0 || y > canvas.height;
+                return x < 0 || x > this.width || y < 0 || y > this.height;
             },
             checkBounds: function(r) {
-                var maxx = this.canvas.width;
-                var maxy = this.canvas.height;
+                var maxx = this.width;
+                var maxy = this.height;
                 var pos = r.position;
                 if (pos.x < 0) {
                     pos.x = maxx;
@@ -135,16 +136,10 @@
                 this._onWindowResize();
 
                 this.ship = this._createShip();
-                for (var i = 0; i < 10; i++) {
-                    this.asteroids.push(this._createAsteroid());
-                }
+                for (var i = 0; i < 20; i++) { this.asteroids.push(this._createAsteroid()); }
 
-                window.addEventListener("keydown", function(event) {
-                    pressed[event.code] = true;
-                });
-                window.addEventListener("keyup", function(event) {
-                    delete pressed[event.code];
-                });
+                window.addEventListener("keydown", function(event) { pressed[event.code] = true; });
+                window.addEventListener("keyup", function(event) { delete pressed[event.code]; });
                 requestAnimationFrame(this.cycle);
             },
             _cycle: function(timestamp) {
@@ -152,6 +147,7 @@
                 var time = this._time;
                 if (time) {
                     var elapsed = (timestamp - time) / 1000;
+                    var resolution = this.canvas.width / this.width;
 
                     // handle input
                     for (var key in this.pressed) {
@@ -163,21 +159,22 @@
                     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
                     // update the ship
-                    this.updateProperties(this.ship, elapsed);
-                    this.checkBounds(this.ship);
-                    this.ship.render(this.context);
+                    var ship = this.ship;
+                    this.updateProperties(ship, elapsed);
+                    this.checkBounds(ship);
+                    ship.render(this.context, resolution);
 
                     // update the asteroids
                     this.asteroids.forEach(function(asteroid) { 
                         this.updateProperties(asteroid, elapsed);
                         this.checkBounds(asteroid);
-                        asteroid.render(this.context);
+                        asteroid.render(this.context, resolution);
                     }, this);
 
                     // update projectiles
                     this.projectiles.forEach(function(projectile, index) {
                         this.updateProperties(projectile, elapsed);
-                        projectile.render(this.context);
+                        projectile.render(this.context, resolution);
                         if (this.isOutOfBounds(projectile)) {
                             this.projectiles.splice(index, 1);
                         }
@@ -187,11 +184,11 @@
             },
             _onWindowResize: function() {
                 var canvas = this.canvas;
-                canvas.width = window.innerWidth - 40;
-                canvas.height = window.innerHeight - 40;
+                var edge = Math.min(window.innerWidth, window.innerHeight) - 30;
+                canvas.height = canvas.width = edge;
             },
             _createShip: function() {
-                var canvas = this.canvas;
+                var res = this.width;
                 return new RenderableObject({
                     path: [
                         new Vector(0, 20),
@@ -200,7 +197,7 @@
                         new Vector(5, -10),
                         new Vector(10, -15)
                     ],
-                    position: new Vector(canvas.width / 2, canvas.height / 2)
+                    position: new Vector(res / 2, res / 2)
                 });
             },
             _createAsteroid: function() {
@@ -218,12 +215,10 @@
                 var asteroid = new RenderableObject({
                     path: path,
                     position: new Vector(Math.random() * canvas.width, Math.random() * canvas.height),
-                    velocity: new Vector(2 * (Math.random() - 1) * 100, 2 * (Math.random() - 1) * 100),
+                    velocity: new Vector(2 * (Math.random() - 0.5) * 100, 2 * (Math.random() - 0.5) * 100),
                     omega: Math.random() * 0.1
                 });
-                for (var i = 0; i < path.length; i++) {
-                    path[i] = path[i].multiplyScalar(1 + 0.8 * Math.random());
-                }
+                for (var i = 0; i < path.length; i++) { path[i] = path[i].multiplyScalar(1 + 0.8 * Math.random()); }
                 return asteroid;
             },
             _createProjectile: function() {
