@@ -1,7 +1,7 @@
 
 define([
-    "RenderablePathObject",
-    "Math/Vector"
+    "../Engine/RenderablePathObject",
+    "../Math/Vector"
 ], function (RenderablePathObject, Vector) {
 
     return class Asteroid extends RenderablePathObject {

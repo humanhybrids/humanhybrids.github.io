@@ -1,11 +1,17 @@
 
-define(function () {
+define([
+    "./Point"
+], function (Point) {
 
-    return class Vector {
+    return class Vector extends Point {
+        /**
+         * even though vectors and points are theoretically
+         * different concepts they share much of the same 
+         * functionality
+         */
 
         constructor(x, y) {
-            this.x = x;
-            this.y = y;
+            super(x, y);
         }
 
         get length() {
@@ -47,6 +53,15 @@ define(function () {
                 this.x - vector.x,
                 this.y - vector.y
             );
+        }
+
+        distance(vector) {
+            return this.subtractVector(vector).length;
+        }
+
+        static random(rect) {
+            var pt = super.random(rect);
+            return new Vector(pt.x, pt.y);
         }
 
     }

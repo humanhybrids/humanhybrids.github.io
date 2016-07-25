@@ -1,7 +1,7 @@
 
 define([
-    "./Math/Vector",
-    "./Math/Rect"
+    "../Math/Vector",
+    "../Math/Rect"
 ], function (Vector, Rect) {
 
     return class RenderableTextObject {

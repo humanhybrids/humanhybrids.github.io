@@ -1,7 +1,7 @@
 
 define([
-    "./Math/Vector",
-    "./Math/Rect"
+    "../Math/Vector",
+    "../Math/Rect"
 ], function (Vector, Rect) {
 
     return class RenderablePathObject {
@@ -19,7 +19,7 @@ define([
         }
 
         update(elapsed, scale) {
-            this.scale = scale;
+            this.scale = scale || 1;
             this.angle += this.omega;
             this.velocity = this.velocity.addVector(this.acceleration.multiplyScalar(elapsed));
             this.position = this.position.addVector(this.velocity.multiplyScalar(elapsed));

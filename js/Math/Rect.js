@@ -1,10 +1,10 @@
 
-define(["./Vector"], function (Vector) {
+define(["./Point"], function (Point) {
 
     return class Rect {
 
         constructor(topLeft, bottomRight) {
-            this.topLeft = topLeft || new Vector(0, 0);
+            this.topLeft = topLeft || new Point(0, 0);
             this.bottomRight = bottomRight || this.topLeft.clone();
         }
 
@@ -23,23 +23,23 @@ define(["./Vector"], function (Vector) {
         }
 
         get topRight() {
-            return new Vector(this.bottomRight.x, this.topLeft.y);
+            return new Point(this.bottomRight.x, this.topLeft.y);
         }
 
         get bottomLeft() {
-            return new Vector(this.topLeft.x, this.bottomRight.y);
+            return new Point(this.topLeft.x, this.bottomRight.y);
         }
 
         unionRect(rect) {
             return new Rect(
-                new Vector(Math.min(this.topLeft.x, rect.topLeft.x), Math.min(this.topLeft.y, rect.topLeft.y)),
-                new Vector(Math.max(this.bottomRight.x, rect.bottomRight.x), Math.max(this.bottomRight.y, rect.bottomRight.y)));
+                new Point(Math.min(this.topLeft.x, rect.topLeft.x), Math.min(this.topLeft.y, rect.topLeft.y)),
+                new Point(Math.max(this.bottomRight.x, rect.bottomRight.x), Math.max(this.bottomRight.y, rect.bottomRight.y)));
         }
 
         unionPoint(point) {
             return new Rect(
-                new Vector(Math.min(this.topLeft.x, point.x), Math.min(this.topLeft.y, point.y)),
-                new Vector(Math.max(this.bottomRight.x, point.x), Math.max(this.bottomRight.y, point.y)));
+                new Point(Math.min(this.topLeft.x, point.x), Math.min(this.topLeft.y, point.y)),
+                new Point(Math.max(this.bottomRight.x, point.x), Math.max(this.bottomRight.y, point.y)));
         }
 
         containsPoint(point) {
@@ -58,7 +58,7 @@ define(["./Vector"], function (Vector) {
                 br.x = Math.max(br.x, pt.x);
                 br.y = Math.max(br.y, pt.y);
                 return rect;
-            }, new Rect(new Vector(Number.MAX_VALUE, Number.MAX_VALUE), new Vector(-Number.MAX_VALUE, -Number.MAX_VALUE)));
+            }, new Rect(new Point(Number.MAX_VALUE, Number.MAX_VALUE), new Point(-Number.MAX_VALUE, -Number.MAX_VALUE)));
         }
 
     }

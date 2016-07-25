@@ -2,6 +2,7 @@
 define(function () {
 
     return class ContextAPI {
+
         constructor(canvas) {
             this.canvas = canvas;
             this.context = canvas.getContext("2d");
@@ -9,10 +10,11 @@ define(function () {
             this._fontFamily = "serif";
         }
 
-        drawRect (rect) {
+        drawRect(rect) {
             this.context.strokeRect(rect.topLeft.x, rect.topLeft.y, rect.width, rect.height);
         }
-        drawPath (path) {
+
+        drawPath(path) {
             /**
              * @param path an array of Point
              * Point := { x: Number, y: Number }
@@ -28,41 +30,47 @@ define(function () {
             context.closePath();
             context.stroke();
         }
+
         drawText(text, position) {
             this.context.fillText(text, position.x, position.y);
         }
-        clear () {
+
+        clear() {
             var canvas = this.canvas;
             this.context.clearRect(0, 0, canvas.width, canvas.height);
         }
+
         setProperty(name, value) {
             if (this.context[name] !== value) {
                 this.context[name] = value;
             }
+        }
+
+        get fonSize() {
+            return this._fontSize;
         }
         set fontSize(value) {
             value = Math.round(value);
             this.setProperty("font", value + "px " + this.fontFamily);
             this._fontSize = value;
         }
-        get fonSize() {
-            return this._fontSize;
-        }
 
+        get fontFamily() {
+            return this._fontFamily;
+        }
         set fontFamily(value) {
             this.setProperty("font", this.fontSize + "px " + value);
             this._fontFamily = value;
-        }
-        get fontFamily() {
-            return this._fontFamily;
         }
 
         set textAlign(value) {
             this.setProperty("textAlign", value);
         }
+
         textBaseline(value) {
             this.setProperty("textBaseline", value);
         }
+
     }
 
 });

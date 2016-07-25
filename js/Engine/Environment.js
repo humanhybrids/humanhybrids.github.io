@@ -1,13 +1,13 @@
 
 define([
-    "./Math/Vector",
-    "./Math/Rect",
+    "../Math/Vector",
+    "../Math/Rect",
     "./RenderableTextObject",
-    "./Objects/Ship",
-    "./Objects/Asteroid",
-    "./Objects/Projectile",
-    "./KeyCodes",
-    "./ContextAPI"
+    "../Objects/Ship",
+    "../Objects/Asteroid",
+    "../Objects/Projectile",
+    "../Util/KeyCodes",
+    "../Util/ContextAPI"
 ], function (Vector, Rect, RenderableTextObject, Ship, Asteroid, Projectile, KeyCodes, ContextAPI) {
 
     return class Environment {
@@ -111,13 +111,23 @@ define([
 
             for (let key in this.pressed) {
                 let handler = this.handlers[key];
-                handler && handler.call(this);
+                ship && handler && handler.call(this);
             }
 
             api.clear();
             ship && proc(ship);
             message && proc(message);
             this.asteroids.forEach(proc);
+
+            // update projectiles
+            this.projectiles.forEach(function (projectile, index) {
+                projectile.update(elapsed, this.scale);
+                if (this.isOutOfBounds(projectile.position)) {
+                    this.projectiles.splice(index, 1);
+                } else {
+                    projectile.render(api);
+                }
+            }, this);
 
             // check collisions
             this.asteroids.forEach(function (asteroid, a_ix) {
@@ -134,24 +144,19 @@ define([
                         this.projectiles.splice(p_ix, 1);
                     }
                 }, this);
-                this.asteroids.forEach(function(other) {
+            }, this);
+
+            var c = this.asteroids.slice();
+            while (c.length > 0) {
+                var asteroid = c.splice(0, 1)[0];
+                c.forEach(function(other) {
                     if (asteroid.checkCollision(other)) {
                         var vel = asteroid.velocity;
                         asteroid.velocity = other.velocity;
                         other.velocity = vel;
                     }
-                }, this);
-            }, this);
-
-            // update projectiles
-            this.projectiles.forEach(function (projectile, index) {
-                projectile.update(elapsed, this.scale);
-                if (this.isOutOfBounds(projectile.position)) {
-                    this.projectiles.splice(index, 1);
-                } else {
-                    projectile.render(api);
-                }
-            }, this);
+                });
+            }
 
             this.time = timestamp;
         }
@@ -175,12 +180,11 @@ define([
         }
 
         _createShip() {
-            var res = this.width;
             return Object.assign(new Ship(), { position: new Vector(this.width / 2, this.height / 2) });
         }
 
         _createAsteroid() {
-            return Object.assign(new Asteroid(), { position: new Vector(Math.random() * this.width, Math.random() * this.height) });
+            return Object.assign(new Asteroid(), { position: Vector.random(this.bounds) });
         }
 
         _createProjectile() {
