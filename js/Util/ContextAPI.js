@@ -67,7 +67,7 @@ define(function () {
             this.setProperty("textAlign", value);
         }
 
-        textBaseline(value) {
+        set textBaseline(value) {
             this.setProperty("textBaseline", value);
         }
 

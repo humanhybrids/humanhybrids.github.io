@@ -1,8 +1,10 @@
 
 define([
     "../Engine/RenderablePathObject",
-    "../Math/Vector"
-], function (RenderablePathObject, Vector) {
+    "../Math/Vector",
+    "./Projectile",
+    "./Ship"
+], function (RenderablePathObject, Vector, Projectile, Ship) {
 
     return class Asteroid extends RenderablePathObject {
 
@@ -17,6 +19,24 @@ define([
             });
             for (var i = 0; i < path.length; i++) {
                 path[i] = path[i].multiplyScalar(1 + Math.random());
+            }
+        }
+
+        onCollision(other) {
+            switch (other.constructor) {
+                case Ship:
+                    other.destroy();
+                    break;
+                case Asteroid:
+                    let velocity = this.velocity;
+                    this.velocity = other.velocity;
+                    other.velocity = velocity;
+                    this.position = this.position.addVector(this.position.subtractVector(other.position).normalize());
+                    break;
+                case Projectile:
+                    this.destroy();
+                    other.destroy();
+                    break;
             }
         }
 

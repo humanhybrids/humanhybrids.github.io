@@ -8,9 +8,9 @@ define([
          * Represents a line or line segment between two points
          */
 
-        constructor(a, b) {
-            this.A = a;
-            this.B = b;
+        constructor(x1, y1, x2, y2) {
+            this.A = new Point(x1, y1);
+            this.B = new Point(x2, y2);
         }
 
         get slope() {
@@ -36,11 +36,11 @@ define([
             return point.y - (this.slope * point.x + this.intercept);
         }
 
-        pointInSegment(point) {
+        pointInSegment(p) {
             var a = this.A;
             var b = this.B;
-            var p = 1000000; // precision
-            return Math.round(p * (point.distance(a) + point.distance(b))) === Math.round(p * a.distance(b));
+            var prec = 10000000000; // precision
+            return Math.round(prec * (p.distance(a) + p.distance(b))) === Math.round(prec * a.distance(b));
         }
 
         intersectsSegment(segment) {

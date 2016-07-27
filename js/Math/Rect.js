@@ -3,9 +3,9 @@ define(["./Point"], function (Point) {
 
     return class Rect {
 
-        constructor(topLeft, bottomRight) {
-            this.topLeft = topLeft || new Point(0, 0);
-            this.bottomRight = bottomRight || this.topLeft.clone();
+        constructor(topLeftX, topLeftY, bottomRightX, bottomRightY) {
+            this.topLeft = new Point(topLeftX || 0, topLeftY || 0);
+            this.bottomRight = new Point(bottomRightX || 0, bottomRightY || 0);
         }
 
         get width() {
@@ -32,14 +32,14 @@ define(["./Point"], function (Point) {
 
         unionRect(rect) {
             return new Rect(
-                new Point(Math.min(this.topLeft.x, rect.topLeft.x), Math.min(this.topLeft.y, rect.topLeft.y)),
-                new Point(Math.max(this.bottomRight.x, rect.bottomRight.x), Math.max(this.bottomRight.y, rect.bottomRight.y)));
+                Math.min(this.topLeft.x, rect.topLeft.x), Math.min(this.topLeft.y, rect.topLeft.y),
+                Math.max(this.bottomRight.x, rect.bottomRight.x), Math.max(this.bottomRight.y, rect.bottomRight.y));
         }
 
         unionPoint(point) {
             return new Rect(
-                new Point(Math.min(this.topLeft.x, point.x), Math.min(this.topLeft.y, point.y)),
-                new Point(Math.max(this.bottomRight.x, point.x), Math.max(this.bottomRight.y, point.y)));
+                Math.min(this.topLeft.x, point.x), Math.min(this.topLeft.y, point.y),
+                Math.max(this.bottomRight.x, point.x), Math.max(this.bottomRight.y, point.y)); 
         }
 
         containsPoint(point) {
@@ -58,7 +58,7 @@ define(["./Point"], function (Point) {
                 br.x = Math.max(br.x, pt.x);
                 br.y = Math.max(br.y, pt.y);
                 return rect;
-            }, new Rect(new Point(Number.MAX_VALUE, Number.MAX_VALUE), new Point(-Number.MAX_VALUE, -Number.MAX_VALUE)));
+            }, new Rect(Number.MAX_VALUE, Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE));
         }
 
     }

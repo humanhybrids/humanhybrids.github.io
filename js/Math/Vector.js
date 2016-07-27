@@ -59,6 +59,10 @@ define([
             return this.subtractVector(vector).length;
         }
 
+        normalize() {
+            return this.multiplyScalar(1 / this.length);
+        }
+
         static random(rect) {
             var pt = super.random(rect);
             return new Vector(pt.x, pt.y);

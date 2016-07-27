@@ -1,8 +1,10 @@
 
 define([
     "../Engine/RenderablePathObject",
-    "../Math/Vector"
-], function (RenderablePathObject, Vector) {
+    "../Engine/RenderableTextObject",
+    "../Math/Vector",
+    "./Asteroid"
+], function (RenderablePathObject, RenderableTextObject, Vector, Asteroid) {
 
     return class Ship extends RenderablePathObject {
 
@@ -11,6 +13,12 @@ define([
             this.path = [
                 new Vector(0, 20), new Vector(-10, -15), new Vector(-5, -10),
                 new Vector(5, -10), new Vector(10, -15)];
+        }
+
+        onCollision(other) {
+            if (other instanceof Asteroid) {
+                this.destroy();
+            }
         }
 
     }

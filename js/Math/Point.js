@@ -8,10 +8,10 @@ define(function () {
             this.y = y;
         }
 
-        addVector(vec) {
+        addVector(v) {
             return new Point(
-                this.x + vec.x,
-                this.y + vec.y
+                this.x + v.x,
+                this.y + v.y
             );
         }
 
@@ -19,15 +19,14 @@ define(function () {
             return new Point(this.x, this.y);
         }
 
-        subtractPoint(point) {
-            return new Vector(
-                this.x - point.x,
-                this.y - point.y
-            );
+        distance(p) {
+            return Math.sqrt(this.distanceSquared(p));
         }
 
-        distance(point) {
-            return Math.sqrt(Math.pow(point.x - this.x, 2) + Math.pow(point.y - this.y, 2));
+        distanceSquared(p) {
+            var x = this.x - p.x;
+            var y = this.y - p.y;
+            return x * x + y * y;
         }
 
         static random(rect) {

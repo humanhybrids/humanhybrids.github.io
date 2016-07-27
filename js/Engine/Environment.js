@@ -16,36 +16,12 @@ define([
             this.canvas = canvas;
             this.time = null;
             this.pressed = {};
-            this.ship = null;
-            this.asteroids = [];
-            this.projectiles = [];
+            this.objects = [];
             this.api = new ContextAPI(canvas);
-
-            this.bounds = new Rect(new Vector(0, 0), new Vector(1080, 1080));
-            this.maxprojectiles = 1;
-
+            this.bounds = new Rect(0, 0, 1080, 1080);
+            this.maxProjectiles = 1;
+            this.projectileCount = 0;
             this.handlers = {};
-            this.setHandlers({
-                A: function () {
-                    this.ship.angle -= 0.1;
-                },
-                D: function () {
-                    this.ship.angle += 0.1;
-                },
-                W: function () {
-                    var ship = this.ship;
-                    ship.velocity = ship.velocity.addVector(new Vector(0, 5).rotate(ship.angle));
-                },
-                S: function () {
-                    var ship = this.ship;
-                    ship.velocity = ship.velocity.addVector(new Vector(0, 5).multiplyScalar(-1).rotate(ship.angle));
-                },
-                SPACE: function () {
-                    if (this.projectiles.length < this.maxprojectiles) {
-                        this.projectiles.push(this._createProjectile());
-                    }
-                }
-            });
         }
 
         get width() {
@@ -60,37 +36,33 @@ define([
             return this.canvas.width / this.width;
         }
 
-        isOutOfBounds(point) {
-            return !this.bounds.containsPoint(point);
-        }
-
-        checkBounds(pos) {
-            var maxx = this.width;
-            var maxy = this.height;
-            if (pos.x < 0) {
-                pos.x = maxx;
-            } else if (pos.x > maxx) {
-                pos.x = 0;
-            }
-            if (pos.y < 0) {
-                pos.y = maxy;
-            } else if (pos.y > maxy) {
-                pos.y = 0;
-            }
-        }
-
         begin() {
-            window.addEventListener("resize", this._onWindowResize.bind(this));
-            this._onWindowResize();
+            var objects = this.objects;
+            window.addEventListener("resize", this.resize.bind(this));
+            this.resize();
 
-            var ship = this.ship = this._createShip();
+            var ship = this.createShip();
+            objects.push(ship);
             for (var i = 0; i < 15; i++) {
-                let asteroid = this._createAsteroid();
-                this.asteroids.push(asteroid);
+                objects.push(this.createAsteroid());
             }
 
             window.addEventListener("keydown", event => this.pressed[event.keyCode] = true);
             window.addEventListener("keyup", event => delete this.pressed[event.keyCode]);
+            this.setHandlers({
+                A: () => ship.angle -= 0.1,
+                D: () => ship.angle += 0.1,
+                W: () => ship.velocity = ship.velocity.addVector(new Vector(0, 5).rotate(ship.angle)),
+                S: () => ship.velocity = ship.velocity.addVector(new Vector(0, 5).multiplyScalar(-1).rotate(ship.angle)),
+                SPACE: () => {
+                    if (!ship.destroyed && this.projectileCount < this.maxProjectiles) {
+                        let projectile = this.createProjectile(ship);
+                        objects.push(projectile);
+                        ++this.projectileCount;
+                    }
+                }
+            });
+
             requestAnimationFrame(timestamp => {
                 this.time = timestamp;
                 requestAnimationFrame(this.process.bind(this));
@@ -99,66 +71,31 @@ define([
 
         process(timestamp) {
             requestAnimationFrame(this.process.bind(this));
-            var self = this;
             var api = this.api;
-            var ship = this.ship;
-            var message = this.message;
             var elapsed = (timestamp - this.time) / 1000;
-
-            function proc(obj) {
-                self._processObject(obj, elapsed);
-            }
 
             for (let key in this.pressed) {
                 let handler = this.handlers[key];
-                ship && handler && handler.call(this);
+                handler && handler.call(this);
             }
 
             api.clear();
-            ship && proc(ship);
-            message && proc(message);
-            this.asteroids.forEach(proc);
-
-            // update projectiles
-            this.projectiles.forEach(function (projectile, index) {
-                projectile.update(elapsed, this.scale);
-                if (this.isOutOfBounds(projectile.position)) {
-                    this.projectiles.splice(index, 1);
-                } else {
-                    projectile.render(api);
+            this.objects.forEach(obj => {
+                obj.update(elapsed, this.scale);
+                obj.checkBounds(this.bounds);
+                obj.render(this.api);
+            });
+            for (var i = 0; i < this.objects.length; i++) {
+                for (var j = i + 1; j < this.objects.length; j++) {
+                    this.objects[i].checkCollision(this.objects[j]);
                 }
-            }, this);
-
-            // check collisions
-            this.asteroids.forEach(function (asteroid, a_ix) {
-                if (ship && asteroid.checkCollision(ship)) {
-                    this.message = Object.assign(new RenderableTextObject(), {
-                        text: "YOU LOSE!",
-                        position: this.ship.position
-                    });
-                    this.ship = null;
-                }
-                this.projectiles.forEach(function (projectile, p_ix) {
-                    if (asteroid.checkCollision(projectile)) {
-                        this.asteroids.splice(a_ix, 1);
-                        this.projectiles.splice(p_ix, 1);
-                    }
-                }, this);
-            }, this);
-
-            var c = this.asteroids.slice();
-            while (c.length > 0) {
-                var asteroid = c.splice(0, 1)[0];
-                c.forEach(function(other) {
-                    if (asteroid.checkCollision(other)) {
-                        var vel = asteroid.velocity;
-                        asteroid.velocity = other.velocity;
-                        other.velocity = vel;
-                    }
-                });
             }
 
             this.time = timestamp;
+        }
+
+        destroyObject(object) {
+            this.objects.splice(this.objects.indexOf(object), 1);
         }
 
         setHandlers(handlers) {
@@ -167,33 +104,39 @@ define([
             }
         }
 
-        _processObject(obj, elapsed) {
-            obj.update(elapsed, this.scale);
-            this.checkBounds(obj.position);
-            obj.render(this.api);
-        }
-
-        _onWindowResize() {
+        resize() {
             var canvas = this.canvas;
-            var edge = Math.min(window.innerWidth, window.innerHeight) - 30;
+            var edge = Math.min(window.innerWidth, window.innerHeight) - 20;
             canvas.height = canvas.width = edge;
         }
 
-        _createShip() {
-            return Object.assign(new Ship(), { position: new Vector(this.width / 2, this.height / 2) });
+        createShip() {
+            var self = this;
+            return Object.assign(new Ship(), {
+                position: new Vector(this.width / 2, this.height / 2),
+                onDestroyed: function () { self.destroyObject(this); }
+            });
         }
 
-        _createAsteroid() {
-            return Object.assign(new Asteroid(), { position: Vector.random(this.bounds) });
+        createAsteroid() {
+            var self = this;
+            return Object.assign(new Asteroid(), {
+                position: Vector.random(this.bounds),
+                onDestroyed: function () { self.destroyObject(this); }
+            });
         }
 
-        _createProjectile() {
-            var ship = this.ship;
+        createProjectile(ship) {
+            var self = this;
             var front = ship.path[0].rotate(ship.angle);
             return Object.assign(new Projectile(), {
                 position: ship.position.addVector(front),
                 velocity: ship.velocity.addVector(front.multiplyScalar(25)),
-                angle: ship.angle
+                angle: ship.angle,
+                onDestroyed: function () {
+                    self.destroyObject(this);
+                    --self.projectileCount;
+                }
             });
         }
 
