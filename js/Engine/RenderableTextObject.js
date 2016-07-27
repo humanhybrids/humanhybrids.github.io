@@ -34,6 +34,16 @@ define([
             api.drawText(this.text, this.position.multiplyScalar(scale));
         }
 
+        checkBounds(bounds) {
+            if (!bounds.containsPoint(this.position)) {
+                this.destroy();
+            }
+        }
+
+        checkCollision(object) {
+            return null;
+        }
+
         getBoundingRect() {
             return new Rect();
         }
