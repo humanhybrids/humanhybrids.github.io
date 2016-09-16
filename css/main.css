@@ -1,0 +1,37 @@
+
+@font-face {
+    font-family: 'clear-sans-thin';
+    src: url('/assets/ClearSans-Thin.ttf');
+}
+
+body {
+    font-family: 'clear-sans-thin';
+    width: 800px;
+    margin: 20px auto;
+}
+
+header {
+    display: table;
+}
+
+header img {
+    width: 40px;
+}
+
+header > * {
+    display: table-cell;
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: text-bottom;
+    padding-right: 10px;
+}
+
+.lines {
+    width: auto;
+}
+
+.lines div {
+    width: 85%;
+    border-bottom: 1px dashed black;
+    padding: 0 0 4px 0;
+}
