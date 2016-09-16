@@ -1,7 +1,5 @@
 
 require([
     "webcomponents",
-    "ui/CMCSkills"
-], function (webcomponents, CMCSkills) {
-
-});
+    "ui/CV"
+], function (webcomponents, CV) { });
