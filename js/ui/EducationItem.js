@@ -10,7 +10,7 @@ define([
         get cssRules() {
             return [
                 ":host { display: block; margin-bottom: .5em; }",
-                ".sm { font-size: .8em; }"
+                ".lg { font-size: 1.2em; }"
             ];
         },
         set "school-name"(schoolName) {

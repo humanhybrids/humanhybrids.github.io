@@ -11,9 +11,7 @@ define([
     return compose.element("cmc-cv", TemplateElement, {
         templateString: template,
         get cssRules() {
-            return [
-                ":host { display: block; }"
-            ]
+            return [":host { display: block; }"];
         }
     });
 

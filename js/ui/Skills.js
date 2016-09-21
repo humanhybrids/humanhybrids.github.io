@@ -7,11 +7,9 @@ define([
 ], function (compose, BaseElement, Skill, data) {
 
     return compose.element("cmc-skills", BaseElement, {
-        templateString: '<ul data-id="list"></ul>',
         get cssRules() {
             return [
-                ":host { display: block; }",
-                "ul { list-style: none; padding: 0; }"
+                ":host { display: block; }"
             ];
         },
         createdCallback: function () {

@@ -9,8 +9,7 @@ define([
         templateString: template,
         get cssRules() {
             return [
-                ".right { float: right; }",
-                ".sm { font-size: .8em; }",
+                ".lg { font-size: 1.2em; }",
                 "div { text-align: justify; margin-bottom: .5em; }"
             ];
         },
