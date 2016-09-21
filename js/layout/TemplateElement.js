@@ -12,8 +12,10 @@ define(["compose", "util", "./BaseElement"], function (compose, util, BaseElemen
 
         createdCallback: function () {
             var template = this.createTemplate(this.parseTemplate(this.templateString, this));
-            this.root.appendChild(document.importNode(template.content, true));
-            this.bindNode(this.root);
+            var node = document.importNode(template.content, true);
+            this.bindNode(node);
+            this.inherited(arguments);
+            this.root.appendChild(node);
         },
 
         createTemplate: function (templateString) {

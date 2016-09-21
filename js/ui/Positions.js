@@ -1,16 +1,16 @@
 
 define([
     "compose",
+    "layout/BaseElement",
     "layout/TemplateElement",
     "./Position",
     "json!data/positions.json"
-], function(compose, TemplateElement, Position, data) {
+], function (compose, BaseElement, TemplateElement, Position, data) {
 
-    return compose.element("cmc-positions", TemplateElement, {
-        templateString: '<h2>Positions</h2><ul data-id="list"></ul>',
-        createdCallback: function() {
+    return compose.element("cmc-positions", BaseElement, {
+        createdCallback: function () {
             this.inherited(arguments);
-            data.forEach(function(position) { this.list.appendChild(new Position(position)); }, this);
+            data.forEach(function (position) { this.root.appendChild(new Position(position)); }, this);
         }
     });
 

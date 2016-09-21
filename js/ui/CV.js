@@ -4,11 +4,17 @@ define([
     "layout/TemplateElement",
     "./Skills",
     "./Positions",
+    "./Educations",
     "text!./templates/CV.html"
-], function(compose, TemplateElement, Skills, Positions, template) {
+], function(compose, TemplateElement, Skills, Positions, Educations, template) {
 
     return compose.element("cmc-cv", TemplateElement, {
-        templateString: template
+        templateString: template,
+        get cssRules() {
+            return [
+                ":host { display: block; }"
+            ]
+        }
     });
 
 });

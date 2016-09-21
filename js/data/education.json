@@ -1,0 +1,38 @@
+[
+    {
+        "school-name": "San Jose State University",
+        "field-of-study": "Computer Science",
+        "start-date": "2014",
+        "end-date": "2016",
+        "degree": "Master of Science",
+        "activities": "",
+        "notes": ""
+    },
+    {
+        "school-name": "California State University, San Bernardino",
+        "field-of-study": "Computer Science",
+        "start-date": "2010",
+        "end-date": "2014",
+        "degree": "Bachelor of Science",
+        "activities": "",
+        "notes": ""
+    },
+    {
+        "school-name": "California State University, San Bernardino",
+        "field-of-study": "Computer Engineering",
+        "start-date": "2010",
+        "end-date": "2014",
+        "degree": "Bachelor of Science",
+        "activities": "",
+        "notes": ""
+    },
+    {
+        "school-name": "Victor Valley College",
+        "field-of-study": "Natural Science",
+        "start-date": "2008",
+        "end-date": "2010",
+        "degree": "Associates of Science",
+        "activities": "",
+        "notes": ""
+    }
+]

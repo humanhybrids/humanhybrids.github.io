@@ -1,27 +1,17 @@
 [
     {
-        "id": 0,
-        "name": "JavaScript",
-        "skillLevel": 10
+        "name": "JavaScript"
     },
     {
-        "id": 1,
-        "name": "C#",
-        "skillLevel": 10
+        "name": "C#"
     },
     {
-        "id": 2,
-        "name": "Java",
-        "skillLevel": 10
+        "name": "Java"
     },
     {
-        "id": 3,
-        "name": "Python",
-        "skillLevel": 10
+        "name": "Python"
     },
     {
-        "id": 4,
-        "name": "C++",
-        "skillLevel": 10
+        "name": "C++"
     }
 ]

@@ -1,16 +1,22 @@
 
 define([
     "compose",
-    "layout/TemplateElement",
+    "layout/BaseElement",
     "./Skill",
     "json!data/skills.json"
-], function (compose, TemplateElement, Skill, data) {
+], function (compose, BaseElement, Skill, data) {
 
-    return compose.element("cmc-skills", TemplateElement, {
-        templateString: '<h2>Skills</h2><ul data-id="list"></ul>',
-        createdCallback: function() {
+    return compose.element("cmc-skills", BaseElement, {
+        templateString: '<ul data-id="list"></ul>',
+        get cssRules() {
+            return [
+                ":host { display: block; }",
+                "ul { list-style: none; padding: 0; }"
+            ];
+        },
+        createdCallback: function () {
             this.inherited(arguments);
-            data.forEach(function(skill) { this.list.appendChild(new Skill(skill)); }, this);
+            data.forEach(function (skill) { this.root.appendChild(new Skill(skill)); }, this);
         }
     });
 

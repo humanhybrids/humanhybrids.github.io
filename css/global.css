@@ -1,0 +1,18 @@
+
+/** 
+Styles defined here transcend shadow boundaries
+*/
+
+@font-face {
+    font-family: 'clear-sans-thin';
+    src: url('/assets/ClearSans-Thin.ttf');
+}
+
+@font-face {
+    font-family: 'clear-sans-regular';
+    src: url('/assets/ClearSans-Regular.ttf');
+}
+
+h1, h2, h3 {
+    font-family: 'clear-sans-thin'
+}

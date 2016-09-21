@@ -1,11 +1,9 @@
 
-@font-face {
-    font-family: 'clear-sans-thin';
-    src: url('/assets/ClearSans-Thin.ttf');
-}
+@import '/css/global.css';
 
 body {
-    font-family: 'clear-sans-thin';
+    font-family: 'clear-sans-regular','tahoma',Helvetica,'helvetica',Arial,sans-serif;
+    font-size: 18px;
     width: 800px;
     margin: 20px auto;
 }
@@ -28,10 +26,19 @@ header > * {
 
 .lines {
     width: auto;
+    padding-right: 0;
 }
 
 .lines div {
-    width: 85%;
     border-bottom: 1px dashed black;
     padding: 0 0 4px 0;
+    margin: 0;
+}
+
+.lines div div {
+    width: 85%;
+}
+
+.lines > div {
+    width: 100%
 }

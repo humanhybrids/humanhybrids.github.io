@@ -77,6 +77,7 @@ define(function () {
         } else {
             document.registerElement(name, constructor);
         }
+        Object.defineProperty(constructor, "meta.name", { enumerable: false });
         return constructor;
     }
 

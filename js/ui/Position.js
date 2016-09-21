@@ -1,11 +1,19 @@
 
 define([
     "compose",
-    "layout/TemplateElement"
-], function(compose, TemplateElement) {
+    "layout/TemplateElement",
+    "text!./templates/Position.html"
+], function(compose, TemplateElement, template) {
 
-    return compose.element("cmc-position", "li", TemplateElement, {
-        templateString: '<b data-id="companyNode"></b> <i data-id="titleNode"></i> <div data-id="summaryNode"></div>',
+    return compose.element("cmc-position", TemplateElement, {
+        templateString: template,
+        get cssRules() {
+            return [
+                ".right { float: right; }",
+                ".sm { font-size: .8em; }",
+                "div { text-align: justify; margin-bottom: .5em; }"
+            ];
+        },
         set company(company) {
             this.companyNode.innerHTML = company.name;
         },
@@ -14,6 +22,19 @@ define([
         },
         set summary(summary) {
             this.summaryNode.innerHTML = summary;
+        },
+        set "start-date"(startDate) {
+            this.startDateNode.innerHTML = startDate;
+        },
+        set "end-date"(endDate) {
+            if (endDate) {
+                this.endDateNode.innerHTML = endDate;
+            }
+        },
+        set "is-current"(isCurrent) {
+            if (isCurrent) {
+                this.endDateNode.innerHTML = "Present";
+            }
         }
     });
 
