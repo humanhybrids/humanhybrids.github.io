@@ -21,7 +21,7 @@ define(["compose", "util", "./BaseElement"], function (compose, util, BaseElemen
                     cssRules = cssRules.replace(/([^]+?){[^]+?}/g, function (match, rule) {
                         var sheet = STYLE.sheet;
                         if (rule.indexOf(name) == -1) {
-                            match = match.replace(rule, rule.trim().split().map(function (r) {
+                            match = match.replace(rule, rule.trim().split(',').map(function (r) {
                                 return name + " " + r;
                             }).join(", "));
                         }
