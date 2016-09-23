@@ -7,12 +7,6 @@ define([
 
     return compose.element("cmc-education-item", TemplateElement, {
         templateString: template,
-        get cssRules() {
-            return [
-                ":host { display: block; margin-bottom: .5em; }",
-                ".lg { font-size: 1.2em; }"
-            ];
-        },
         set "school-name"(schoolName) {
             this.schoolNameNode.innerHTML = schoolName;
         },

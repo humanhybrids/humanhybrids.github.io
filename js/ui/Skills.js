@@ -8,9 +8,7 @@ define([
 
     return compose.element("cmc-skills", BaseElement, {
         get cssRules() {
-            return [
-                ":host { display: block; }"
-            ];
+            return [":host { display: block; }"];
         },
         createdCallback: function () {
             this.inherited(arguments);

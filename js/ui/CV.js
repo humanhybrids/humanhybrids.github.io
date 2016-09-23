@@ -9,10 +9,7 @@ define([
 ], function(compose, TemplateElement, Skills, Positions, Educations, template) {
 
     return compose.element("cmc-cv", TemplateElement, {
-        templateString: template,
-        get cssRules() {
-            return [":host { display: block; }"];
-        }
+        templateString: template
     });
 
 });

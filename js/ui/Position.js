@@ -7,12 +7,6 @@ define([
 
     return compose.element("cmc-position", TemplateElement, {
         templateString: template,
-        get cssRules() {
-            return [
-                ".lg { font-size: 1.2em; }",
-                "div { text-align: justify; margin-bottom: .5em; }"
-            ];
-        },
         set company(company) {
             this.companyNode.innerHTML = company.name;
         },

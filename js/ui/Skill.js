@@ -1,18 +1,12 @@
 
 define([
     "compose",
-    "layout/TemplateElement"
-], function (compose, TemplateElement) {
+    "layout/TemplateElement",
+    "text!./templates/Skill.html"
+], function (compose, TemplateElement, template) {
 
     return compose.element("cmc-skill", TemplateElement, {
-        templateString: '<span data-id="nameNode"></span>',
-        get cssRules() {
-            return [
-                ":host { display: inline; margin-right: 10px; }",
-                "span { padding: 5px; border-radius: 5px; cursor: default; }",
-                "span:hover { background-color: lightgray; }"
-            ];
-        },
+        templateString: template,
         set name(name) {
             this.nameNode.innerHTML = name;
         }

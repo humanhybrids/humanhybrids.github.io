@@ -3,7 +3,7 @@ define(function () {
 
     var SEP = " ";
 
-    function getOwnPropertyDescriptors (object) {
+    function getOwnPropertyDescriptors(object) {
         return Object.keys(object).reduce(function (descriptors, id) {
             var descriptor = Object.getOwnPropertyDescriptor(object, id);
             if (descriptor) {
@@ -25,11 +25,13 @@ define(function () {
             name = names[1];
             descriptor = Object.getOwnPropertyDescriptor(supertype, name);
         }
-        return descriptor && descriptor[type].apply(this, args);
+        if (descriptor) {
+            return descriptor[type].apply(this, args);
+        }
     }
 
     function setup(proto) {
-        Object.keys(proto).forEach(function(id) {
+        Object.keys(proto).forEach(function (id) {
             var descriptor = Object.getOwnPropertyDescriptor(proto, id);
             if (!descriptor) return;
             if (descriptor.value && typeof descriptor.value === "function") {
@@ -50,34 +52,39 @@ define(function () {
     function compose(Extends, proto) {
         var Super = Extends || Object;
         var constructor = proto.hasOwnProperty("constructor") ? proto.constructor : (function () { Super.apply(this, arguments); });
-        constructor.prototype = Object.create(Super.prototype, getOwnPropertyDescriptors(proto));
-        constructor.prototype.super = Super.prototype;
-        constructor.prototype.inherited = inherited;
-        setup(constructor.prototype);
+        var prototype = constructor.prototype = Object.create(Super.prototype, getOwnPropertyDescriptors(proto));
+        prototype.super = Super.prototype;
+        prototype.inherited = inherited;
+        setup(prototype);
+        if (prototype.postCompose) {
+            prototype.postCompose();
+        }
         return constructor;
     }
 
-    compose.element = function(name, tagName, Extends, proto) {
+    compose.element = function (name, tagName, Extends, proto) {
         if (typeof proto === "undefined") {
             proto = Extends;
             Extends = tagName;
             tagName = null;
         }
-        proto.constructor = !!tagName ? function(init) {
+        proto.constructor = !!tagName ? function (init) {
             return Object.assign(document.createElement(tagName, name), init);
-        } : function(init) {
+        } : function (init) {
             return Object.assign(document.createElement(name), init);
         };
+        proto.constructor.meta = {
+            name: name,
+            tagName: tagName
+        };
         var constructor = compose(Extends, proto);
+
+        var options = { prototype: constructor.prototype };
         if (!!tagName) {
-            document.registerElement(name, {
-                extends: tagName,
-                prototype: constructor.prototype
-            });
-        } else {
-            document.registerElement(name, constructor);
+            options.extends = tagName;
         }
-        Object.defineProperty(constructor, "meta.name", { enumerable: false });
+        document.registerElement(name, options);
+
         return constructor;
     }
 
