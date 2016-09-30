@@ -28,7 +28,8 @@
 
     require([
         "webcomponents",
-        "ui/CV"
+        "ui/CV",
+        "ui/Lines"
     ]);
 
 })();
