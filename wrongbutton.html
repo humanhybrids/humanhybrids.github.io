@@ -9,6 +9,8 @@
 			height: 100%;
 			padding: 0;
 			margin: 0;
+			background: url('assets/bg_trump_wrong.bmp') center no-repeat;
+			background-size: cover;
 		}
 		
 		body {
@@ -20,29 +22,30 @@
 		button {
 			width: 50%;
 			height: 300px;
-			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a90329+0,8f0222+64,6d0019+93 */
-			background: #a90329;
-			/* Old browsers */
-			background: -moz-linear-gradient(left, #a90329 0%, #8f0222 64%, #6d0019 93%);
-			/* FF3.6-15 */
-			background: -webkit-linear-gradient(left, #a90329 0%, #8f0222 64%, #6d0019 93%);
-			/* Chrome10-25,Safari5.1-6 */
-			background: linear-gradient(to right, #a90329 0%, #8f0222 64%, #6d0019 93%);
-			/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-			filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019', GradientType=1);
-			/* IE6-9 */
 			font-size: 45px;
 			color: white;
 			font-family: Helvetica;
 			cursor: pointer;
 		}
+		
+		.bg {
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a90329+0,8f0222+64,6d0019+93&0.4+0,0.62+100 */
+			background: -moz-linear-gradient(left, rgba(169, 3, 41, 0.4) 0%, rgba(143, 2, 34, 0.54) 64%, rgba(109, 0, 25, 0.6) 93%, rgba(109, 0, 25, 0.62) 100%);
+			/* FF3.6-15 */
+			background: -webkit-linear-gradient(left, rgba(169, 3, 41, 0.4) 0%, rgba(143, 2, 34, 0.54) 64%, rgba(109, 0, 25, 0.6) 93%, rgba(109, 0, 25, 0.62) 100%);
+			/* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to right, rgba(169, 3, 41, 0.4) 0%, rgba(143, 2, 34, 0.54) 64%, rgba(109, 0, 25, 0.6) 93%, rgba(109, 0, 25, 0.62) 100%);
+			/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#66a90329', endColorstr='#9e6d0019', GradientType=1);
+			/* IE6-9 */
+		}
 	</style>
 </head>
 
 <body>
-	<button onclick="document.getElementById('snd_wrong').play()">WRONG!</button>
+	<button class="bg" onclick="document.getElementById('snd_wrong').play()">WRONG!</button>
 	<audio id="snd_wrong" src="assets/wrong.mp3" preload></audio>
-    <!-- Happy Birthday Colson! -->
+	<!-- Happy Birthday Colson! -->
 </body>
 
 </html>
