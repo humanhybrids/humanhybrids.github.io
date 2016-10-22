@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>WRONG!</title>
+	<style>
+		html,
+		body {
+			height: 100%;
+			padding: 0;
+			margin: 0;
+		}
+		
+		body {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		button {
+			width: 50%;
+			height: 300px;
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a90329+0,8f0222+64,6d0019+93 */
+			background: #a90329;
+			/* Old browsers */
+			background: -moz-linear-gradient(left, #a90329 0%, #8f0222 64%, #6d0019 93%);
+			/* FF3.6-15 */
+			background: -webkit-linear-gradient(left, #a90329 0%, #8f0222 64%, #6d0019 93%);
+			/* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to right, #a90329 0%, #8f0222 64%, #6d0019 93%);
+			/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019', GradientType=1);
+			/* IE6-9 */
+			font-size: 45px;
+			color: white;
+			font-family: Helvetica;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<button onclick="document.getElementById('snd_wrong').play()">WRONG!</button>
+	<audio id="snd_wrong" src="assets/wrong.mp3" preload></audio>
+    <!-- Happy Birthday Colson! -->
+</body>
+
+</html>
