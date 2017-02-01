@@ -2,18 +2,46 @@
 <html>
 
 <head>
-
+  <title>Pulse</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Kumar+One');
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+    form {
+      display: none;
+      width: 800px;
+      margin: auto;
+    }
+    canvas {
+      display: block;
+      margin: auto;
+    }
+    #click {
+      font-family: 'Kumar One', sans-serif;
+      color: white;
+      font-size: 100px;
+      position: absolute;
+      top: 50%;
+      margin-top: -50px;
+      margin-left: -200px;
+      left: 50%;
+      pointer-events: none;
+    }
+  </style>
 </head>
 
 <body>
-  <form style="display: block; width: 800px; margin: auto;">
+  <form>
     <label>amplitude <input id="A" type="number" step="1" value="30" /></label>
     <label>lambda <input id="lambda" type="number" step="0.1" value="0.8" /></label>
-    <span>Click below.</span>
   </form>
-  <canvas id="canvas" style="margin: auto; display: block;"></canvas>
+  <canvas id="canvas"></canvas>
+  <div id="click">TOUCH</div>
 
   <script>
+
     function getValue(id) {
       return parseFloat(document.getElementById(id).value);
     }
@@ -28,12 +56,12 @@
     };
 
     var squares = [];
-    var HEIGHT = 800;
-    var WIDTH = 800;
-    var hcount = 80;
-    var vcount = 80;
-    var hsize = WIDTH / hcount;
-    var vsize = HEIGHT / vcount;
+    var HEIGHT = window.innerHeight;
+    var WIDTH = window.innerWidth;
+    var hsize = 30;
+    var vsize = 30;
+    var hcount = Math.ceil(HEIGHT / hsize);
+    var vcount = Math.ceil(WIDTH / vsize);
 
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
@@ -91,10 +119,6 @@
       ctx.closePath();
     }
 
-    function translate(x, y) {
-      ctx.translate(x, y);
-    }
-
     var _BEGIN = Date.now();
     function millis() {
       return Date.now() - _BEGIN;
@@ -105,23 +129,23 @@
       this.y = y;
     }
     PVector.prototype = Object.create({
-      normalize: function() {
+      normalize: function () {
         var length = this.length;
         this.x = this.x / length;
         this.y = this.y / length;
         return this;
       },
-      mult: function(scalar) {
+      mult: function (scalar) {
         this.x = this.x * scalar;
         this.y = this.y * scalar;
         return this;
       },
-      add: function(vec) {
+      add: function (vec) {
         this.x = this.x + vec.x;
         this.y = this.y + vec.y;
         return this;
       },
-      sub: function(x, y) {
+      sub: function (x, y) {
         this.x = this.x - x;
         this.y = this.y - y;
         return this;
@@ -166,14 +190,14 @@
       this.vPulses = [];
     }
     Square.prototype = Object.create({
-      pulse: function(x, y) {
+      pulse: function (x, y) {
         this.vPulses.push(new Pulse(this.left, this.top, x, y));
       },
-      render: function() {
+      render: function () {
         var pulse = new PVector(0, 0);
         var vPulses = this.vPulses;
         for (var i = vPulses.length - 1; i >= 0; i--) {
-          let p = vPulses[i];
+          var p = vPulses[i];
           if (p.expired) {
             vPulses.splice(i, 1);
             continue;
@@ -190,20 +214,18 @@
       fill(color(150, 150, 200));
       for (var h = 0; h < hcount; h++)
         for (var v = 0; v < vcount; v++)
-          squares.push(new Square(h * hsize, v * vsize, hsize));
+          squares.push(new Square(v * vsize, h * hsize, hsize));
     }
 
     function draw() {
       background(255);
-      for (var i = 0; i < squares.length; i++) {
+      for (var i = 0; i < squares.length; i++)
         squares[i].render();
-      }
     }
 
     function mouseClicked() {
-      for (var i = 0; i < squares.length; i++) {
+      for (var i = 0; i < squares.length; i++)
         squares[i].pulse(mouseX, mouseY);
-      }
     }
 
     function frame() {
@@ -211,16 +233,33 @@
       requestAnimationFrame(frame);
     }
 
-    canvas.addEventListener("mousemove", function(e) {
+    canvas.addEventListener("mousemove", function (e) {
       mouseX = e.offsetX;
       mouseY = e.offsetY;
     });
     if (mouseClicked) {
       canvas.addEventListener("click", mouseClicked);
+      canvas.addEventListener("touchend", function(e) {
+        var touch = e.touches.item(0);
+        mouseX = touch.clientX;
+        mouseY = touch.clientY;
+        mouseClicked();
+        e.preventDefault();
+      });
     }
+    canvas.addEventListener("touchmove", function(e) {
+      e.preventDefault();
+    });
 
     setup();
     requestAnimationFrame(frame);
+
+    window.addEventListener('resize', function () {
+      squares = [];
+      WIDTH = window.innerWidth;
+      HEIGHT = window.innerHeight;
+      setup();
+    });
   </script>
 </body>
 
