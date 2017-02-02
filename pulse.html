@@ -56,12 +56,12 @@
     };
 
     var squares = [];
+    var HSIZE = 30;
+    var VSIZE = 30;
     var HEIGHT = window.innerHeight;
     var WIDTH = window.innerWidth;
-    var hsize = 30;
-    var vsize = 30;
-    var hcount = Math.ceil(HEIGHT / hsize);
-    var vcount = Math.ceil(WIDTH / vsize);
+    var hcount = Math.ceil(HEIGHT / HSIZE);
+    var vcount = Math.ceil(WIDTH / VSIZE);
 
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
@@ -214,7 +214,7 @@
       fill(color(150, 150, 200));
       for (var h = 0; h < hcount; h++)
         for (var v = 0; v < vcount; v++)
-          squares.push(new Square(v * vsize, h * hsize, hsize));
+          squares.push(new Square(v * VSIZE, h * HSIZE, HSIZE));
     }
 
     function draw() {
@@ -238,18 +238,23 @@
       mouseY = e.offsetY;
     });
     if (mouseClicked) {
-      canvas.addEventListener("click", mouseClicked);
-      canvas.addEventListener("touchend", function(e) {
+      canvas.addEventListener("mouseup", mouseClicked);
+      canvas.addEventListener("touchstart", function (e) {
         var touch = e.touches.item(0);
         mouseX = touch.clientX;
         mouseY = touch.clientY;
         mouseClicked();
         e.preventDefault();
       });
+      canvas.addEventListener("touchend", call("preventDefault"));
     }
-    canvas.addEventListener("touchmove", function(e) {
-      e.preventDefault();
-    });
+    canvas.addEventListener("touchmove", call("preventDefault"));
+
+    function call(fn) {
+      return function(o) {
+        o[fn].call(o);
+      }
+    }
 
     setup();
     requestAnimationFrame(frame);
@@ -258,6 +263,8 @@
       squares = [];
       WIDTH = window.innerWidth;
       HEIGHT = window.innerHeight;
+      hcount = Math.ceil(HEIGHT / HSIZE);
+      vcount = Math.ceil(WIDTH / VSIZE);
       setup();
     });
   </script>
