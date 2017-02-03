@@ -6,6 +6,10 @@
             "layout/BaseElement": {
                 cssGlobal: "/css/global.css"
             }
+        },
+        paths: {
+            "showdown": "https://cdn.rawgit.com/showdownjs/showdown/1.6.3/dist/showdown.min",
+            "moment": "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min"
         }
     };
 
@@ -30,5 +34,9 @@
         "webcomponents",
         "ui/cv"
     ]);
+
+    if (/blog/g.test(window.location.pathname)) {
+        require(["ui/blog"]);
+    }
 
 })();

@@ -21,6 +21,10 @@ header > * {
     padding-right: 10px;
 }
 
+header a {
+    text-decoration: none;
+}
+
 .lines {
     width: auto;
     padding-right: 0;
