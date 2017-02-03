@@ -1,0 +1,44 @@
+<style>
+    :host {
+        flex: 1 0 auto;
+        flex-basis: 15em;
+    }
+    
+    a[data-id=linkNode] {
+        display: inline-block;
+        text-decoration: none;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    
+    a[data-id=linkNode]:hover {
+        background-color: lightgray;
+    }
+    
+    a[data-id=linkNode]:hover::before {
+        content: "›";
+        float: right;
+        margin: 0 10px 0 15px;
+    }
+    
+    a {
+        color: inherit;
+    }
+    
+    a:visited {
+        color: inherit;
+    }
+    
+    b[data-id=nameNode] {
+        font-size: 1.2em;
+    }
+
+    div[data-id=descriptionNode] {
+        padding: 0 5px;
+    }
+</style>
+
+<a data-id="linkNode">
+    <b data-id="nameNode"></b> <i data-id="createdNode"></i>
+</a>
+<div data-id="descriptionNode"></div>

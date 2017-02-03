@@ -1,13 +1,24 @@
 [
     {
-        "title": "Front-End Developer",
-        "summary": "Develop REST services and implement interface designs for storage management systems.",
+        "title": "Full Stack Developer",
+        "summary": "Develop solutions for storage management systems.",
         "start-date": "January 2016",
         "end-date": "",
         "is-current": true,
         "company": {
             "name": "International Business Machines"
-        }
+        },
+        "related-skills": [
+            {
+                "name": "JavaScript"
+            },
+            {
+                "name": "Java"
+            },
+            {
+                "name": "SQL"
+            }
+        ]
     },
     {
         "title": "Software Engineer Intern",
