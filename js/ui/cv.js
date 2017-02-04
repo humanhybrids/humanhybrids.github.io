@@ -4,19 +4,17 @@ define([
     "layout/BaseElement",
     "layout/TemplateElement",
 
-    "json!data/apps.json",
-    "json!data/education.json",
-    "json!data/positions.json",
-    "json!data/skills.json",
+    "json!data/cv.json",
 
     "text!./templates/cv.html",
     "text!./templates/app.html",
+    "text!./templates/publication.html",
     "text!./templates/education.html",
     "text!./templates/position.html",
     "text!./templates/skill.html"
-], function (compose, BaseElement, TemplateElement,
-    appsData, educationData, positionsData, skillsData,
-    template, appTemplate, educationItemTemplate, positionTemplate, skillTemplate) {
+], function (compose, BaseElement, TemplateElement, cv,
+    template, appTemplate, publicationTemplate, educationItemTemplate,
+    positionTemplate, skillTemplate) {
 
         var AppItem = compose.element("cmc-app-item", TemplateElement, {
             templateString: appTemplate,
@@ -34,11 +32,33 @@ define([
             }
         });
 
-        var Apps = compose.element("cmc-apps", BaseElement, {
-            createdCallback: function () {
-                this.inherited(arguments);
-                this.style.display = "flex";
-                appsData.forEach(function (app) { this.root.appendChild(new AppItem(app)); }, this);
+        var Publication = compose.element("cmc-publication-item", TemplateElement, {
+            templateString: publicationTemplate,
+            set authors(values) {
+                this.authorsNode.innerHTML = values.reduce(function (prev, current) {
+                    if (prev.length > 0) {
+                        prev += ", ";
+                    }
+                    prev += current.firstName.substring(0, 1) + ". ";
+                    prev += current.lastName;
+                    return prev;
+                }, "");
+            },
+            set title(value) {
+                this.titleNode.innerHTML = value;
+            },
+            set year(value) {
+                this.yearNode.innerHTML = value;
+            },
+            set publication(value) {
+                this.publicationNode.innerHTML = value;
+            },
+            set city(value) {
+                this.cityNode.innerHTML = value;
+            },
+            set link(value) {
+                this.linkNode.href = value.url;
+                this.linkNode.innerHTML = value.text;
             }
         });
 
@@ -58,14 +78,6 @@ define([
             },
             set degree(degree) {
                 this.degreeNode.innerHTML = degree;
-            }
-        });
-
-        var Educations = compose.element("cmc-educations", BaseElement, {
-            createdCallback: function () {
-                this.inherited(arguments);
-                this.style.display = "block";
-                educationData.forEach(function (ed) { this.root.appendChild(new EducationItem(ed)); }, this);
             }
         });
 
@@ -95,14 +107,6 @@ define([
             }
         });
 
-        var Positions = compose.element("cmc-positions", BaseElement, {
-            createdCallback: function () {
-                this.inherited(arguments);
-                this.style.display = "block";
-                positionsData.forEach(function (position) { this.root.appendChild(new Position(position)); }, this);
-            }
-        });
-
         var Skill = compose.element("cmc-skill", TemplateElement, {
             templateString: skillTemplate,
             set name(name) {
@@ -110,16 +114,25 @@ define([
             }
         });
 
-        var Skills = compose.element("cmc-skills", BaseElement, {
+        var List = compose.element("cmc-list", BaseElement, {
             createdCallback: function () {
-                this.inherited(arguments);
-                this.style.display = "block";
-                skillsData.forEach(function (skill) { this.root.appendChild(new Skill(skill)); }, this);
+                var ItemType = this.itemType;
+                this.data.forEach(function (item) { this.root.appendChild(new ItemType(item)); }, this);
             }
         });
 
-        return compose.element("cmc-cv", TemplateElement, {
-            templateString: template
+        compose.element("cmc-apps", List, {
+            itemType: AppItem,
+            data: cv.apps,
+            createdCallback: function () {
+                this.inherited(arguments);
+                this.style.display = "flex";
+            }
         });
+        compose.element("cmc-publications", List, { itemType: Publication, data: cv.publications });
+        compose.element("cmc-educations", List, { itemType: EducationItem, data: cv.education });
+        compose.element("cmc-positions", List, { itemType: Position, data: cv.positions });
+        compose.element("cmc-skills", List, { itemType: Skill, data: cv.skills });
+        return compose.element("cmc-cv", TemplateElement, { templateString: template });
 
     });

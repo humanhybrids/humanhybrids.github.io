@@ -1,0 +1,168 @@
+{
+    "apps": [
+        {
+            "name": "Pulse",
+            "url": "/pulse.html",
+            "description": "Generates a pulsing ripple effect when the user touches the screen. Adapted from a <a href='https://processing.org'>Processing</a> script that I created.",
+            "created": "2016"
+        },
+        {
+            "name": "Asteroids",
+            "url": "/asteroids",
+            "description": "A simple asteroids game. Use WASD to move the ship and spacebar to fire a projectile.",
+            "created": "2016"
+        }
+    ],
+    "education": [
+        {
+            "school-name": "San Jose State University",
+            "field-of-study": "Computer Science",
+            "start-date": "2014",
+            "end-date": "2016",
+            "degree": "Master of Science",
+            "activities": "",
+            "notes": ""
+        },
+        {
+            "school-name": "California State University, San Bernardino",
+            "field-of-study": "Computer Science",
+            "start-date": "2010",
+            "end-date": "2014",
+            "degree": "Bachelor of Science",
+            "activities": "",
+            "notes": ""
+        },
+        {
+            "school-name": "California State University, San Bernardino",
+            "field-of-study": "Computer Engineering",
+            "start-date": "2010",
+            "end-date": "2014",
+            "degree": "Bachelor of Science",
+            "activities": "",
+            "notes": ""
+        },
+        {
+            "school-name": "Victor Valley College",
+            "field-of-study": "Natural Science",
+            "start-date": "2008",
+            "end-date": "2010",
+            "degree": "Associates of Science",
+            "activities": "",
+            "notes": ""
+        }
+    ],
+    "positions": [
+        {
+            "title": "Full Stack Developer",
+            "summary": "Develop solutions for storage management systems.",
+            "start-date": "January 2016",
+            "end-date": "",
+            "is-current": true,
+            "company": {
+                "name": "International Business Machines"
+            },
+            "related-skills": [
+                {
+                    "name": "JavaScript"
+                },
+                {
+                    "name": "Java"
+                },
+                {
+                    "name": "SQL"
+                }
+            ]
+        },
+        {
+            "title": "Software Engineer Intern",
+            "summary": "Collect usability metrics and component information for tablet devices, and use this information to generate component suggestions for future tablet designs. Work with multiple teams on several testing and implementation projects. Design and develop solutions to unique and specific problems.",
+            "start-date": "August 2014",
+            "end-date": "December 2015",
+            "is-current": false,
+            "company": {
+                "name": "Intel Corporation"
+            }
+        },
+        {
+            "title": "Software Engineer",
+            "summary": "Handle the design, development, integration, and deployment of software systems and associated systems including database architecture, application design, and interface design. Analyze and optimize currently implemented software systems to improve scalability and reliability. Promote best practices in software design to improve quality and enable software autonomy, diminishing third party reliance within the company.",
+            "start-date": "April 2014",
+            "end-date": "August 2014",
+            "is-current": false,
+            "company": {
+                "name": "New Classic Home Furniture"
+            }
+        },
+        {
+            "title": "Graduate Assistant",
+            "summary": "Supervised and assisted bachelor level students in an advanced computer architecture class. Read reports and assisted in determining their comprehension of the material.",
+            "start-date": "April 2014",
+            "end-date": "June 2014",
+            "is-current": false,
+            "company": {
+                "name": "California State University, San Bernardino"
+            }
+        },
+        {
+            "title": "Process Control Engineer Intern",
+            "summary": "Software Engineering, Web Design, Web Programming, Software Design, Systems Administration, Database Administration",
+            "start-date": "July 2012",
+            "end-date": "June 2014",
+            "is-current": false,
+            "company": {
+                "name": "California Steel Industries"
+            }
+        },
+        {
+            "title": "Engineering Intern",
+            "summary": "Small group dynamic working to develop testing systems for medical treatment systems. Involves hardware, schematic, and printed circuit board design and layout.",
+            "start-date": "September 2012",
+            "end-date": "June 2013",
+            "is-current": false,
+            "company": {
+                "name": "Optivus Proton Therapy, Inc."
+            }
+        }
+    ],
+    "publications": [
+        {
+            "authors": [
+                {
+                    "firstName": "Cory",
+                    "lastName": "Cook"
+                }
+            ],
+            "title": "DNA Region Grammatical Inference",
+            "year": 2016,
+            "publication": "2016 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)",
+            "city": "Shenzhen, China",
+            "link": {
+                "text": "Full Text",
+                "url": "/assets/CoryCook_DNARegionGrammaticalInference.pdf"
+            }
+        }
+    ],
+    "skills": [
+        {
+            "name": "JavaScript"
+        },
+        {
+            "name": "C#"
+        },
+        {
+            "name": "Java"
+        },
+        {
+            "name": "Python"
+        },
+        {
+            "name": "C++"
+        },
+        {
+            "name": "HTML5/CSS3"
+        },
+        {
+            "name": "SQL"
+        }
+    ]
+}

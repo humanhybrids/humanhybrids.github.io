@@ -32,11 +32,16 @@
 
     require([
         "webcomponents",
-        "ui/cv"
+        "ui/header"
     ]);
 
     if (/blog/g.test(window.location.pathname)) {
         require(["ui/blog"]);
+    } else {
+        require([
+            "ui/cv",
+            "ui/bloglist"
+        ]);
     }
 
 })();

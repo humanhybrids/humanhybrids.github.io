@@ -1,4 +1,0 @@
-
-## JavaScript
-
-Coming soon.

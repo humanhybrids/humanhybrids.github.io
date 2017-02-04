@@ -1,18 +1,27 @@
 [
     {
         "id": "webdev1",
-        "name": "Web Dev Crash Course",
+        "name": "Quick Intro to HTML",
         "created": {
-            "value": "2017-02-02 11:30 -0800",
+            "value": "2017-02-02 23:30 -0800",
             "format": "YYYY-MM-DD HH:mm Z"
         },
         "abstract": "A quick introduction to HTML basics."
     },
     {
         "id": "webdev2",
-        "name": "Introductory Web Scripting",
+        "name": "Quick Intro to CSS",
         "created": {
-            "value": "2017-02-03 00:13 -0800",
+            "value": "2017-02-04 00:40 -0800",
+            "format":"YYYY-MM-DD HH:mm Z"
+        },
+        "abstract": "A quick introduction to CSS basics."
+    },
+    {
+        "id": "webdev3",
+        "name": "Quick Intro to JavaScript",
+        "created": {
+            "value": "2017-02-03 00:10 -0800",
             "format":"YYYY-MM-DD HH:mm Z"
         },
         "abstract": "A quick introduction to JavaScript basics."

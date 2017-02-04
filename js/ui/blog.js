@@ -9,7 +9,7 @@ define([
 
     "json!data/blogs.json",
     "text!./templates/blog.html"
-], function (moment, showdown, compose, BaseElement, TemplateElement, blogsData, blogTemplate) {
+], function (moment, showdown, compose, BaseElement, TemplateElement, blogsData, template) {
 
     var converter = new showdown.Converter();
 
@@ -18,31 +18,10 @@ define([
         return previousValue;
     }, {});
 
-    var BlogItem = compose.element("cmc-blog-item", TemplateElement, {
-        templateString: blogTemplate,
-        get id() {
-            return this._id;
-        },
-        set id(value) {
-            this._id = value;
-            var contentNode = this.contentNode;
-            require(["text!blog/" + value + ".md"], function (text) {
-                contentNode.innerHTML = converter.makeHtml(text);
-            });
-        },
-        set name(value) {
-            this.titleNode.innerHTML = value;
-        },
-        set created(date) {
-            this.createdNode.innerHTML = moment(date.value, date.format).calendar();
-        }
-    });
-
     return compose.element("cmc-blog", TemplateElement, {
-        templateString: '<cmc-blog-item data-id="blog"></cmc-blog-item> <a data-id="prevNode" style="display: none;">Previous</a> <a data-id="nextNode" style="display: none;">Next</a>',
+        templateString: template,
         createdCallback: function () {
             this.inherited(arguments);
-            this.keys = Object.keys(blogsData);
             window.addEventListener("hashchange", this.getPage.bind(this));
             this.getPage();
         },
@@ -52,26 +31,42 @@ define([
                 id = blogsData[0].id;
             }
             var blog = blogs[id];
-            Object.assign(this.blog, blog);
-            var ix = blogsData.indexOf(blog);
-            this.prev = blogsData[ix - 1];
-            this.next = blogsData[ix + 1];
+            if (blog) {
+                Object.assign(this, blog);
+                var ix = blogsData.indexOf(blog);
+                this.prev = blogsData[ix - 1];
+                this.next = blogsData[ix + 1];
+            }
+        },
+        _setLinkAttr: function (blog, linkNode, nameNode) {
+            var id = blog && blog.id;
+            if (id) {
+                linkNode.href = "#" + id;
+                nameNode.innerHTML = blog.name;
+            }
+            linkNode.style.display = !!id ? "inline" : "none";
         },
         set prev(blog) {
-            var id = blog && blog.id;
-            var prevNode = this.prevNode;
-            if (id) {
-                prevNode.href = "#" + id;
-            }
-            prevNode.style.display = !!id ? "inline" : "none";
+            this._setLinkAttr(blog, this.prevLinkNode, this.prevNameNode);
         },
         set next(blog) {
-            var id = blog && blog.id;
-            var nextNode = this.nextNode;
-            if (id) {
-                nextNode.href = "#" + id;
-            }
-            nextNode.style.display = !!id ? "inline" : "none";
+            this._setLinkAttr(blog, this.nextLinkNode, this.nextNameNode);
+        },
+        set id(value) {
+            this._id = value;
+            var contentNode = this.contentNode;
+            require(["text!blog/" + value + ".md"], function (text) {
+                contentNode.innerHTML = converter.makeHtml(text);
+            }, function (err) {
+                contentNode.innerHTML = "<p>Sorry, unable to load content for some reason.</p>"
+            });
+        },
+        set name(value) {
+            this.titleNode.innerHTML = value;
+            document.title = value;
+        },
+        set created(date) {
+            this.createdNode.innerHTML = moment(date.value, date.format).calendar();
         }
     });
 
