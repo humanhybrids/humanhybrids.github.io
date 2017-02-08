@@ -75,8 +75,15 @@ define([
                 this.inherited(arguments);
                 window.addEventListener("hashchange", this.getPage.bind(this));
                 var list = this.navNode;
-                window.addEventListener("scroll", function() {
-                    list.classList.toggle("sticky", (window.scrollY + 20) > list.offsetTop);
+                var active = false;
+                window.addEventListener("scroll", function () {
+                    if (!active) {
+                        active = true;
+                        window.requestAnimationFrame(function () {
+                            list.classList.toggle("sticky", (window.scrollY + 20) > list.offsetTop);
+                            active = false;
+                        });
+                    }
                 });
                 this.getPage();
             },
