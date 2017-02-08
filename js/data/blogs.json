@@ -1,7 +1,7 @@
 [
     {
         "id": "webdev1",
-        "name": "Quick Intro to HTML",
+        "name": "Crash Course: HTML",
         "created": {
             "value": "2017-02-02 23:30 -0800",
             "format": "YYYY-MM-DD HH:mm Z"
@@ -10,7 +10,7 @@
     },
     {
         "id": "webdev2",
-        "name": "Quick Intro to CSS",
+        "name": "Crash Course: CSS",
         "created": {
             "value": "2017-02-04 00:40 -0800",
             "format":"YYYY-MM-DD HH:mm Z"
@@ -19,7 +19,7 @@
     },
     {
         "id": "webdev3",
-        "name": "Quick Intro to JavaScript",
+        "name": "Crash Course: JavaScript",
         "created": {
             "value": "2017-02-03 00:10 -0800",
             "format":"YYYY-MM-DD HH:mm Z"
