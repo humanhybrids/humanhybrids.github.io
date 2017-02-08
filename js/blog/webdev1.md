@@ -1,5 +1,5 @@
 
-## Basics
+# Basics
 
 While not a programming language in and of itself HyperText Markup Language (HTML) is very powerful for the display
 and format of visual information. HTML format is based off of the eXtensible Markup Language (XML) so those familiar with 
@@ -44,12 +44,12 @@ can also contain the `<link>`, `<script>`, `<style>`, and `<meta>` elements. Mor
 The `<body>` is the portion on the page that the user interacts with upon visiting. This is where you will put
 all of the text, links, images, and other content that you want to be visible to the user. 
 
-## How do I...
+# How do I...
 
 In this section I will cover several things that you may want to make or do on a web page and 
 how to accomplish that with HTML.
 
-### ... link to another page?
+## ... link to another page?
 
 Creating a link to another page can be done with an anchor tag `<a>`.
 
@@ -65,7 +65,7 @@ to indicate that it is a link to another page. The value of the href attribute c
 relative path to another page on the same site or an absolute path 
 (e.g. http://corycook.github.io/nextpage.html).
 
-### ... show an image?
+## ... show an image?
 
 In order to show an image on a web page the image must be available online. It should be hosted 
 with your html page or by another provider. You can then use the `<img>` tag to display the image
@@ -79,7 +79,7 @@ on your page.
 
 The "src" attribute is the full or relative path to the image file.
 
-### ... add line breaks?
+## ... add line breaks?
 
 White space is ignored by the browser so all of your text will be bunched up together in one big blob
 unless you use HTML to break up your paragraphs. HTML is pretty good at wrapping your text content to the 
@@ -104,7 +104,7 @@ break `<br>` element.
 
 > <p>This is broken<br>for dramatic effect!</p>
 
-### ... emphasize text?
+## ... emphasize text?
 
 HTML has elements that allow you to emphasize `<em>`, italicize `<i>`, make bold `<b>` 
 (or `<strong>`), and underline `<u>` text.

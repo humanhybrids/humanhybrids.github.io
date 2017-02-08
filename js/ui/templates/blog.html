@@ -1,6 +1,26 @@
 <style>
+    @import url('/css/global.css');
+
     .blog > footer > * {
         padding: 4px;
+    }
+    
+    .blog > aside {
+        float: right;
+    }
+    
+    .blog cmc-nav-list {
+        display: block;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 4px;
+        padding: 4px;
+    }
+
+    .blog cmc-nav-list.sticky {
+        position: fixed;
+        top: 20px;
+        right: 20px;
     }
 </style>
 <article class="blog">
@@ -8,6 +28,11 @@
         <h1 data-id="titleNode"></h1>
         <div data-id="createdNode"></div>
     </header>
+    <aside>
+        <nav>
+            <cmc-nav-list data-id="navNode"></cmc-nav-list>
+        </nav>
+    </aside>
     <section data-id="contentNode"></section>
     <footer>
         <a data-id="prevLinkNode" style="display: none;">Previous - <span data-id="prevNameNode"></span></a>

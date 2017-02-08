@@ -12,3 +12,19 @@ Styles defined here transcend shadow boundaries
     font-family: 'clear-sans-regular';
     src: url('/assets/ClearSans-Regular.ttf');
 }
+
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.25em;
+}
+
+h3 {
+    font-size: 1.1em;
+}
+
+h4 {
+    font-size: 1em;
+}
