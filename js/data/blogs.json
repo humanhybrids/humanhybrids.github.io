@@ -7,23 +7,5 @@
             "format": "YYYY-MM-DD HH:mm Z"
         },
         "abstract": "A quick introduction to HTML basics."
-    },
-    {
-        "id": "webdev2",
-        "name": "Crash Course: CSS",
-        "created": {
-            "value": "2017-02-04 00:40 -0800",
-            "format":"YYYY-MM-DD HH:mm Z"
-        },
-        "abstract": "A quick introduction to CSS basics."
-    },
-    {
-        "id": "webdev3",
-        "name": "Crash Course: JavaScript",
-        "created": {
-            "value": "2017-02-03 00:10 -0800",
-            "format":"YYYY-MM-DD HH:mm Z"
-        },
-        "abstract": "A quick introduction to JavaScript basics."
     }
 ]
