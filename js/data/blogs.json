@@ -6,6 +6,15 @@
             "value": "2017-02-02 23:30 -0800",
             "format": "YYYY-MM-DD HH:mm Z"
         },
-        "abstract": "A quick introduction to HTML basics."
+        "abstract": "A quick introduction to HTML."
+    },
+    {
+        "id": "twitchproj1",
+        "name": "Live Stream Data Analysis",
+        "created": {
+            "value": "2017-02-08 23:23 -0800",
+            "format": "YYYY-MM-DD HH:mm Z"
+        },
+        "abstract": "I'm starting a new project to analyze live stream (or previously live) and user feedback via chat interaction."
     }
 ]
