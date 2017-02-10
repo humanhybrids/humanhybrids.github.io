@@ -9,6 +9,15 @@
         "abstract": "A quick introduction to HTML."
     },
     {
+        "id": "webdev2",
+        "name": "Crash Course: CSS",
+        "created": {
+            "value": "2017-02-09 19:00 -0800",
+            "format": "YYYY-MM-DD HH:mm Z"
+        },
+        "abstract": "A quick introduction to the wonderful world of CSS."
+    },
+    {
         "id": "twitchproj1",
         "name": "Live Stream Data Analysis",
         "created": {

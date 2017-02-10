@@ -1,6 +1,11 @@
 <style>
     @import url('/css/global.css');
 
+    .blog > footer {
+        display: flex;
+        justify-content: space-between;
+    }
+
     .blog > footer > * {
         padding: 4px;
     }
@@ -22,6 +27,18 @@
         top: 20px;
         right: 20px;
     }
+
+    .blog a.button {
+        text-decoration: none;
+        margin: 0 4px;
+        color: inherit;
+        background-color: #eee;
+        border-radius: 5px;
+    }
+
+    .blog a.button:hover {
+        box-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+    }
 </style>
 <article class="blog">
     <header>
@@ -35,7 +52,7 @@
     </aside>
     <section data-id="contentNode"></section>
     <footer>
-        <a data-id="prevLinkNode" style="display: none;">Previous - <span data-id="prevNameNode"></span></a>
-        <a data-id="nextLinkNode" style="display: none;">Next - <span data-id="nextNameNode"></span></a>
+        <a data-id="prevLinkNode" class="button" style="display: none;">Back to <span data-id="prevNameNode"></span></a>
+        <a data-id="nextLinkNode" class="button" style="display: none; margin-left: auto;">Continue to <span data-id="nextNameNode"></span></a>
     </footer>
 </article>

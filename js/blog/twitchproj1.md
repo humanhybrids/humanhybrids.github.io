@@ -29,4 +29,5 @@ public API does provide the ability to access stream data and chat logs.
 ## YouTube Live
 
 [YouTube Live](https://www.youtube.com/live) offers live streaming and interactive chat. Will need to look into getting stream and chat data; 
-however, they have a well developed API and libraries for almost every platform.
+however, they have a well developed API and libraries for almost every platform. This may be a better option if chat logs are available for 
+previous broadcasts.
