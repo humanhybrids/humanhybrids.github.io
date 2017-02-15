@@ -70,14 +70,27 @@ Each of the following elements has 10 pixel margin, a 2 pixel solid black border
 
 The box model applies to all elements on the page, even nested ones.
 
-<span style="padding: 10px; margin: 2px; border: 1px solid black;">
-    <span style="margin: 5px; border: 1px inset green; padding: 5px;">Left</span>
-    <span style="margin: 5px; border: 1px outset red; padding: 10px;">Right</span>
-</span>
+<div style="padding: 10px; margin: 2px; border: 1px solid black;">
+    <div style="margin: 15px; border: 1px inset green; padding: 5px;">First</div><div style="margin: 15px; border: 1px outset red; padding: 10px;">Second</div>
+</div>
 
-Here the outer element has a padding of 10px and the inner elements have a margin of 5px.
-This is an example of [margin collapse](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing)
-and is just one of the wonderful quirks of web development.
+Here the outer element has a padding of 10 pixels and the inner elements have a margin of 15 pixels.
 
-<script>
-</script>
+# Margin collapse
+
+The example above (Nested elements) is also an example of [margin collapse](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing). 
+Notice how the space between the outer box and the inner boxes is 25 pixels (10 px outer padding + 15 pixel inner margin) but the distance between the two inner boxes
+is only 15 pixels. You would expect the distance to be 30 pixels, but the two margins are collapsed into a single margin of 15 pixels. The rule is that the larger 
+margin between two siblings wins.
+
+# Inline elements
+
+Inline elements have padding and left and right margins; however, top and bottom margins are not applied to inline elements.
+
+<div style="margin: 20px;">
+    <span style="padding: 10px; margin: 2px; border: 1px solid black;">
+        <span style="margin: 15px; border: 1px inset green; padding: 5px;">First</span><span style="margin: 15px; border: 1px outset red; padding: 10px;">Second</span>
+    </span></div>
+
+This example uses the same rules as the example above; however, these rules are applied to inline `<span>` elements rather than block `<div>` elements. Notice that
+the top and bottom margins are ignored.
