@@ -17,20 +17,67 @@
 
 <body>
     <cmc-header></cmc-header>
-    <div style="width: 400px; float: right; margin: 0 0 0 30px; max-width: 50%;">
-        <a class="twitter-timeline" data-height="1000" href="https://twitter.com/humanhybrids">Tweets by humanhybrids</a>
-    </div>
-    <h2>About Me</h2>
-    <p>
-        Welcome! If you found your way to my little corner of the internet then please
-        <a href="mailto:clovecooks@gmail.com">let me know</a>. I am a Computer Scientist. I graduated from Cal State, San
-        Bernardino then from SJSU. My dream was to work for Intel and, thanks to (tons of) support from my lovely wife, I
-        was able to achieve that dream. I have been developing software professionally since 2012, but I would like to do
-        research someday. I am interested in areas of Artificial Intelligence, Natural Language Processing, Grammatical Inference,
-        and Graphics and Parallel Processing.
-    </p>
-    <h2>Posts</h2>
-    <cmc-blog-list></cmc-blog-list>
+
+    <style>
+        .top {
+            display: flex;
+            flex-flow: row;
+            align-items: stretch;
+        }
+        
+        .top-content {
+            flex: 3 1 70%;
+        }
+        
+        .twitter-content {
+            flex: 1 2 30%;
+            margin: 0 0 20px 20px;
+        }
+        
+        .twitter-feed {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+            border-radius: 3px;
+        }
+        
+        .twitter-feed > div {
+            position: absolute;
+            top: -3em;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <article class="top">
+        <section class="top-content">
+            <section>
+                <h2>About Me</h2>
+                <p>
+                    Welcome! If you found your way to my little corner of the internet then please let me know. I am a Computer Scientist. I
+                    graduated from Cal State, San Bernardino then from SJSU. My dream was to work for Intel and, thanks to
+                    (tons of) support from my lovely wife, I was able to achieve that dream. I have been developing software
+                    professionally since 2012, but I would like to do research someday. I am interested in areas of Artificial
+                    Intelligence, Natural Language Processing, Grammatical Inference, and Graphics and Parallel Processing.
+                </p>
+            </section>
+            <section>
+                <h2>Posts</h2>
+                <cmc-blog-list></cmc-blog-list>
+            </section>
+            <section>
+                <h2>Apps</h2>
+                <cmc-apps></cmc-apps>
+            </section>
+        </section>
+        <section class="twitter-content">
+            <h2>Tweets</h2>
+            <div class="twitter-feed">
+                <div><a class="twitter-timeline" data-theme="dark" href="https://twitter.com/humanhybrids">Tweets by humanhybrids</a></div>
+            </div>
+        </section>
+    </article>
+
     <cmc-cv></cmc-cv>
 </body>
 
