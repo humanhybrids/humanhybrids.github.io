@@ -30,7 +30,7 @@ define([
         createdCallback() {
             this.style.display = "flex";
             this.style.flexWrap = "wrap";
-            data.forEach(function (blog) {
+            data.reverse().forEach(function (blog) {
                 this.root.appendChild(new BlogListItem(blog));
             }, this);
         }

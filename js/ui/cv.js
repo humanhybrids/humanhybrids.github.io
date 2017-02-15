@@ -127,6 +127,7 @@ define([
             createdCallback: function () {
                 this.inherited(arguments);
                 this.style.display = "flex";
+                this.style.flexWrap = "wrap";
             }
         });
         compose.element("cmc-publications", List, { itemType: Publication, data: cv.publications });

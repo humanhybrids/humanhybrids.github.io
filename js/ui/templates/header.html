@@ -1,24 +1,26 @@
 <style>
-    header {
-        display: flex;
-        align-items: center;
-    }
-    
-    header img {
+    img {
         width: 40px;
     }
     
-    header > * {
-        padding-right: 10px;
-    }
-    
-    header a {
+    a {
         text-decoration: none;
+        color: inherit;
+    }
+
+    .flexContainer {
+        display: inline-flex;
+        align-items: baseline;
+    }
+
+    .flexContainer > * {
+        margin: 5px;
     }
 </style>
 <header>
-    <div><img src="assets/CCLogo.svg" /></div>
-    <a href="/">
+    <a class="flexContainer" href="/">
+        <div><img src="assets/CCLogo.svg" /></div>
         <h1>Cory Cook</h1>
+        <small>@humanhybrids</small>
     </a>
 </header>
