@@ -4,13 +4,15 @@ var fs = require("fs");
 
 gulp.task("paths", function () {
     cp.exec("bower list --paths --json", function (err, stdout) {
-        if (!err) {
-            var paths = JSON.parse(stdout.replace(/\.js/g, ""));
-            for (var id in paths) {
-                paths[id] = "/" + paths[id];
-            }
-            fs.writeFile("js/data/paths.json", JSON.stringify(paths, null, 4), e => console.log("js/data/paths.json written"));
+        if (err) {
+            console.warn(err);
+            return;
         }
+        var paths = JSON.parse(stdout.replace(/\.js/g, ""));
+        for (var id in paths) {
+            paths[id] = "/" + paths[id];
+        }
+        fs.writeFile("js/data/paths.json", JSON.stringify(paths, null, 4), e => console.log("js/data/paths.json written"));
     });
 });
 
