@@ -69,6 +69,37 @@ Notice that none of the variables defined above need to have any type informatio
 They all use the `var` keyword to define. Also, even after a variable has been assigned 
 it can be reassigned to a value of any type. So, there is no type safety in JavaScript.
 
+## Objects
+
+Much like Java, everything in JavaScript is a JavaScript Object. Here is the most basic 
+object initialization:
+
+```JavaScript
+var instance = {
+    key: "value"
+};
+```
+
+Objects and Arrays can be nested during initialization: 
+
+```JavaScript
+var instance = {
+    nestedArray: [
+        {
+            name: "first"
+        },
+        {
+            name: "second"
+        }
+    ],
+    nestedObject: {
+        key: "value"
+    }
+}
+```
+
+This is also an example of array initialization using square backets `[]`.
+
 ## Functions
 
 Functions are the "meat and potatoes" of JavaScript programming. Functions in JavaScript are first-class objects, 
@@ -113,7 +144,7 @@ There are a few ways you can pass a function to getData:
     ```JavaScript
     var callbackFn = function(data) {
         // consume data
-    }
+    };
     getData(callbackFn);
     ```
 
@@ -219,7 +250,7 @@ Car.prototype = {
     getString: function() {
         return this.make + " " + this.model + " (" + this.year + ")";
     }
-}
+};
 ```
 
 Now when we create a new Car with `var tt = new Car(1990, "Toyota", "Tercel")` we can
@@ -244,7 +275,7 @@ User.prototype = {
     isAllowed: function(level) {
         return this.level >= level;
     }
-}
+};
 
 function AdminUser(name) {
     User.call(this, name);
