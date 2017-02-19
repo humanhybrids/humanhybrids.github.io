@@ -1,6 +1,5 @@
 
 require(["config!"], function (cfg) {
-    console.log(cfg);
     var load = ["webcomponentsjs", "ui/header"];
     var page = window.location.pathname;
     if (/blog/g.test(page)) {
