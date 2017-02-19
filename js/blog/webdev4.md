@@ -3,7 +3,7 @@ JavaScript is a scripting language with Java-like syntax (hence the name). I'll 
 post on those already familiar with C++ or Java. JavaScript is famous for being the 
 programming language of the web; however, it is also used for other applications (e.g. Node.js).
 
-Let's start by examining what makes JavaScript different from Java.
+Let's compare and contrast Java and JavaScript.
 
 # Java Similarities
 
