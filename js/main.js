@@ -1,12 +1,9 @@
 
-require(["config!"], function (cfg) {
-    var load = ["webcomponentsjs", "ui/header"];
-    var page = window.location.pathname;
-    if (/blog/g.test(page)) {
-        load.push("ui/blog");
-    } else {
-        load.push("ui/cv");
-        load.push("ui/bloglist");
-    }
-    require(load);
+require(["config!"], function (config) {
+    var load = ["webcomponentsjs"];
+    var components = Array.from(document.querySelectorAll("link[rel=preload][href$=js]")).map(function (link) {
+        var id = link.getAttribute("href");
+        return id.substring(config.baseUrl.length, id.indexOf(".js"));
+    });
+    require(load.concat(components));
 });

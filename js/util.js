@@ -19,6 +19,20 @@ define(function () {
                 return target;
             }
             return null;
+        },
+        throttle: function (callback, thisArg) {
+            var active = false;
+            return function () {
+                if (!active) {
+                    active = true;
+                    var args = arguments;
+                    thisArg = thisArg || this;
+                    window.requestAnimationFrame(function () {
+                        callback.apply(thisArg, args);
+                        active = false;
+                    });
+                }
+            }
         }
     };
 

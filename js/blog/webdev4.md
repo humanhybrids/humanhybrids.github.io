@@ -1,3 +1,4 @@
+# Intro
 
 JavaScript is a scripting language with Java-like syntax (hence the name). I'll target this 
 post on those already familiar with C++ or Java. JavaScript is famous for being the 

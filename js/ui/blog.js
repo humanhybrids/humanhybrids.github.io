@@ -2,6 +2,7 @@
 define([
     "moment",
     "showdown",
+    "util",
 
     "compose",
     "layout/BaseElement",
@@ -10,7 +11,7 @@ define([
     "json!data/blogs.json",
     "text!./templates/blog.html",
     "text!./templates/blognavlist.html"
-], function (moment, showdown, compose, BaseElement, TemplateElement,
+], function (moment, showdown, util, compose, BaseElement, TemplateElement,
     blogsData, template, navListTemplate) {
 
         var converter = new showdown.Converter();
@@ -74,17 +75,9 @@ define([
             createdCallback: function () {
                 this.inherited(arguments);
                 window.addEventListener("hashchange", this.getPage.bind(this));
-                var list = this.navNode;
-                var active = false;
-                window.addEventListener("scroll", function () {
-                    if (!active) {
-                        active = true;
-                        window.requestAnimationFrame(function () {
-                            list.classList.toggle("sticky", (window.scrollY + 20) > list.offsetTop);
-                            active = false;
-                        });
-                    }
-                });
+                window.addEventListener("scroll", util.throttle(function(e) {
+                    this.navNode.classList.toggle("sticky", (window.scrollY + 20) > this.contentNode.offsetTop);
+                }, this));
                 this.getPage();
             },
             getPage: function () {
@@ -99,6 +92,7 @@ define([
                     this.prev = blogsData[ix - 1];
                     this.next = blogsData[ix + 1];
                 }
+                window.scrollTo(0, 0);
             },
             _setLinkAttr: function (blog, linkNode, nameNode) {
                 var id = blog && blog.id;
