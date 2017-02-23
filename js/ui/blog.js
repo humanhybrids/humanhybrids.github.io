@@ -61,6 +61,7 @@ define([
                     }));
                     lastTag = node.tagName;
                 }, this);
+                this.classList.toggle("hidden", nodes.length);
             },
             clear: function () {
                 while (this.list.firstChild) {
@@ -81,9 +82,11 @@ define([
                 this.getPage();
             },
             getPage: function () {
-                var id = window.location.hash.substring(1);
+                var match = /#(\w+)\??/.exec(window.location.hash);
+                var id = match && match[1];
                 if (!id) {
-                    id = blogsData[0].id;
+                    window.location.hash = blogsData[blogsData.length - 1].id;
+                    return;
                 }
                 var blog = blogs[id];
                 if (blog) {
@@ -92,7 +95,7 @@ define([
                     this.prev = blogsData[ix - 1];
                     this.next = blogsData[ix + 1];
                 }
-                window.scrollTo(0, 0);
+                window.scrollTo(0, this.offsetTop);
             },
             _setLinkAttr: function (blog, linkNode, nameNode) {
                 var id = blog && blog.id;
@@ -100,7 +103,7 @@ define([
                     linkNode.href = "#" + id;
                     nameNode.innerHTML = blog.name;
                 }
-                linkNode.style.display = !!id ? "inline" : "none";
+                linkNode.classList.toggle("hidden", !id);
             },
             _updateNavigation: function () {
                 this.navNode.nodes = this.contentNode.querySelectorAll("h1,h2,h3,h4,h5,h6");

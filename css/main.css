@@ -5,6 +5,11 @@
 body {
     font-family: 'Open Sans','clear-sans-regular',sans-serif;
     font-size: 15px;
-    margin: 20px;
     color: #222;
+    margin: 0;
+}
+
+body > * {
+    display: block;
+    padding: 20px;
 }
