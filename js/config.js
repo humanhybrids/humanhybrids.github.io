@@ -16,7 +16,7 @@ define([], function () {
             div.createShadowRoot && div.createShadowRoot();
             var shadowDOM = div.shadowRoot && div.shadowRoot !== div;
             if (!shadowDOM) {
-                console.warn("shadowDOM not suppoted.");
+                console.warn("shadowDOM not supported.");
                 Object.assign(config, {
                     map: {
                         "*": {

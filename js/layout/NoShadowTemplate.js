@@ -4,6 +4,12 @@ define(["compose", "util", "./BaseElement"], function (compose, util, BaseElemen
     var STYLE = document.createElement("style");
     document.head.appendChild(STYLE);
 
+    if (!NodeList.prototype.forEach) {
+        NodeList.prototype.forEach = function() {
+            Array.from(this).forEach.apply(this, arguments);
+        };
+    }
+
     return compose(BaseElement, {
 
         postCompose: function () {
@@ -25,7 +31,11 @@ define(["compose", "util", "./BaseElement"], function (compose, util, BaseElemen
                                 return name + " " + r;
                             }).join(", "));
                         }
-                        sheet.insertRule(match, sheet.cssRules.length);
+                        try {
+                            sheet.insertRule(match, sheet.cssRules.length);
+                        } catch (e) {
+                            console.error(e);
+                        }
                     });
                 }
             }
