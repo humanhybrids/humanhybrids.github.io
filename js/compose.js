@@ -1,5 +1,5 @@
 
-define(function () {
+define(["webcomponentsjs"], function () {
 
     var SEP = " ";
 
