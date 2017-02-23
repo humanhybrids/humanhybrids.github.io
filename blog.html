@@ -11,7 +11,7 @@
     <link rel="manifest" href="/manifest.json">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#453453">
     <meta name="theme-color" content="#453453">
-    
+
     <link rel="preload" href="js/ui/header.js">
     <link rel="preload" href="js/ui/blog.js">
     <link rel="preload" href="js/ui/bloglist.js">
@@ -24,6 +24,17 @@
     <cmc-header></cmc-header>
     <cmc-blog-list></cmc-blog-list>
     <cmc-blog></cmc-blog>
+
+    <div id="disqus_thread"></div>
+
+    <script class="hidden">
+        (function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//corycook-github-io.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
 </body>
 
 </html>
