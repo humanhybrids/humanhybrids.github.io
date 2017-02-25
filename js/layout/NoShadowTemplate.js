@@ -25,8 +25,7 @@ define(["compose", "util", "./BaseElement"], function (compose, util, BaseElemen
                     var selector = tagName ? "[is=" + name + "]" : name;
                     cssRules = cssRules.replace(":host", selector);
                     cssRules = cssRules.replace(/@import url\(([^)]*)\);/g, function (match, url) {
-                        console.log("import: ", url);
-                        if (document.querySelectorAll("style[href=" + url + "]").length === 0) {
+                        if (document.querySelector("style[href=" + url + "]") == null) {
                             document.head.appendChild(Object.assign(document.createElement("style"), {
                                 rel: "stylesheet",
                                 href: url
@@ -34,7 +33,7 @@ define(["compose", "util", "./BaseElement"], function (compose, util, BaseElemen
                         }
                         return "";
                     });
-                    cssRules = cssRules.replace(/([^]+?){[^]+?}/g, function (match, rule) {
+                    cssRules.replace(/([^]+?){[^]+?}/g, function (match, rule) {
                         var sheet = STYLE.sheet;
                         if (rule.indexOf(selector) == -1) {
                             match = match.replace(rule, rule.trim().split(',').map(function (r) {
