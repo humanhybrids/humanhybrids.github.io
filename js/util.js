@@ -33,7 +33,20 @@ define(function () {
                     });
                 }
             }
-        }
+        },
+        animate: function (from, to, ms, callback, easing) {
+            if (!easing) easing = this.cubicOut;
+            var time = +new Date();
+            function _() {
+                var k = Math.min((+new Date() - time) / ms, 1);
+                callback(from + (to - from) * easing(k));
+                if (k < 1) window.requestAnimationFrame(_);
+            }
+            window.requestAnimationFrame(_);
+        },
+        linear: function (k) { return k; },
+        quadraticOut: function (k) { return k * (2 - k); },
+        cubicOut: function (k) { return (k - 1) * (k - 1) * (k - 1) + 1; }
     };
 
 });

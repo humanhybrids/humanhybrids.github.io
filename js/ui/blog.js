@@ -58,7 +58,10 @@ define([
                     }
                     this.push(Object.assign(document.createElement("a"), {
                         innerHTML: node.innerHTML,
-                        onclick: function () { window.scroll(0, node.offsetTop); }
+                        onclick: function () {
+                            util.animate(window.scrollY, node.offsetTop, 500,
+                                function (y) { window.scrollTo(0, y); });
+                        }
                     }));
                     lastTag = node.tagName;
                 }, this);
@@ -97,7 +100,8 @@ define([
                     this.prev = blogsData[ix - 1];
                     this.next = blogsData[ix + 1];
                 }
-                window.scrollTo(0, this.offsetTop);
+                util.animate(window.scrollY, this.offsetTop, 500,
+                    function (y) { window.scrollTo(0, y); });
                 comments.reset({ id: id });
             },
             _setLinkAttr: function (blog, linkNode, nameNode) {
