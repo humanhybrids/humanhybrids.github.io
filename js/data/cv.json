@@ -11,6 +11,12 @@
             "url": "/asteroids",
             "description": "A simple asteroids game. Use WASD to move the ship and spacebar to fire a projectile.",
             "created": "2016"
+        },
+        {
+            "name": "jalex",
+            "url": "https://github.com/corycook/jalex",
+            "description": "A Jison compatible lexical analyzer with streaming capability and events",
+            "created": "Feb 2017"
         }
     ],
     "education": [

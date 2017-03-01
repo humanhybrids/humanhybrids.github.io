@@ -11,7 +11,7 @@ define([], function () {
             this.page.identifier = options.id || loc.hash;
             this.page.url = options.url || ("http://" + loc.host + loc.pathname + "#!" + (loc.hash && loc.hash.substr(1)));
             this.page.title = options.title || document.title;
-        }
+        };
     }
 
     var enabled = false;
