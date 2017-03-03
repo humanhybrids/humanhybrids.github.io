@@ -1,0 +1,44 @@
+{
+  "name": "corycook.github.io",
+  "version": "1.0.0",
+  "description": "My personal web page",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-preset-env": "^1.1.11",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-real-favicon": "^0.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corycook/corycook.github.io.git"
+  },
+  "author": "Cory Cook",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/corycook/corycook.github.io/issues"
+  },
+  "homepage": "https://github.com/corycook/corycook.github.io#readme",
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "last 2 versions",
+              "safari >= 7"
+            ]
+          }
+        }
+      ]
+    ]
+  }
+}

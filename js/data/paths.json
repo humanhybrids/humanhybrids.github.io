@@ -1,6 +1,6 @@
 {
-    "moment": "/bower_components/moment/moment",
     "showdown": "/bower_components/showdown/dist/showdown",
+    "moment": "/bower_components/moment/moment",
     "webcomponentsjs": "/bower_components/webcomponentsjs/webcomponents",
     "text": "/bower_components/text/text"
 }
