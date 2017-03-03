@@ -274,7 +274,7 @@ define([], function () {
         K_7: "7",
         K_8: "8",
         K_9: "9"
-}
+    }
     return games;
 
 });

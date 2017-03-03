@@ -22,6 +22,7 @@ gulp.task("paths", ["install"], function () {
 	});
 });
 
+
 function transpile(source, dest) {
 	return gulp.src(source)
 		.pipe(babel())

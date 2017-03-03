@@ -1,0 +1,24 @@
+{
+  "name": "corycook.github.io",
+  "description": "My personal web page",
+  "main": "gulpfile.js",
+  "authors": [
+    "Cory Cook"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/corycook/corycook.github.io",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "text": "^2.0.15",
+    "showdown": "^1.6.4",
+    "moment": "^2.17.1",
+    "webcomponentsjs": "^0.7.24"
+  }
+}
