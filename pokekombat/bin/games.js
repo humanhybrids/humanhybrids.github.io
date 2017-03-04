@@ -164,7 +164,9 @@ define([], function () {
                 _ref4$dx = _ref4.dx,
                 dx = _ref4$dx === undefined ? 0 : _ref4$dx,
                 _ref4$dy = _ref4.dy,
-                dy = _ref4$dy === undefined ? 0 : _ref4$dy;
+                dy = _ref4$dy === undefined ? 0 : _ref4$dy,
+                _ref4$is_collideable = _ref4.is_collideable,
+                is_collideable = _ref4$is_collideable === undefined ? false : _ref4$is_collideable;
 
             _classCallCheck(this, Renderable);
 
@@ -173,6 +175,7 @@ define([], function () {
             this.y = y;
             this.dx = dx;
             this.dy = dy;
+            this.is_collideable = is_collideable;
         }
 
         _createClass(Renderable, [{
@@ -305,10 +308,9 @@ define([], function () {
 
             _classCallCheck(this, Sprite);
 
-            var _this4 = _possibleConstructorReturn(this, (Sprite.__proto__ || Object.getPrototypeOf(Sprite)).call(this, { x: x, y: y, dx: dx, dy: dy }));
+            var _this4 = _possibleConstructorReturn(this, (Sprite.__proto__ || Object.getPrototypeOf(Sprite)).call(this, { x: x, y: y, dx: dx, dy: dy, is_collideable: is_collideable }));
 
             _this4.image = image;
-            _this4.is_collideable = is_collideable;
             return _this4;
         }
 
@@ -363,9 +365,13 @@ define([], function () {
             get: function get() {
                 var _this5 = this;
 
-                return games.screen.region(this).filter(function (obj) {
+                var region = games.screen.region(this).filter(function (obj) {
                     return obj != _this5;
                 });
+                if (region.length === 0) {
+                    return null;
+                }
+                return region;
             }
         }]);
 
@@ -450,22 +456,21 @@ define([], function () {
 
             _classCallCheck(this, Sound);
 
+            this.loaded = false;
+            this.url = url;
             var sound = this.sound = document.createElement("audio");
             sound.loop = loop;
-            this.loaded = false;
-            sound.addEventListener('load', function (e) {
+            sound.addEventListener('canplay', function (e) {
                 return _this7.loaded = true;
             });
             if (url) {
                 this.load(url);
             }
-            this.url = url;
         }
 
         _createClass(Sound, [{
             key: 'load',
             value: function load(url) {
-                this.url = url;
                 this.loaded = false;
                 this.sound.src = BASE_SOUND_URL + url;
                 this.sound.load();

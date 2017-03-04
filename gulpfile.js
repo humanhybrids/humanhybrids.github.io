@@ -22,8 +22,8 @@ gulp.task("paths", ["install"], function () {
 	});
 });
 
-
 function transpile(source, dest) {
+	console.log(`transpiling ${source} to ${dest}`);
 	return gulp.src(source)
 		.pipe(babel())
 		.pipe(gulp.dest(dest));

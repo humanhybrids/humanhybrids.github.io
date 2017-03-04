@@ -77,12 +77,13 @@ define([], function () {
     }
 
     class Renderable {
-        constructor({ x = 0, y = 0, dx = 0, dy = 0 }) {
+        constructor({ x = 0, y = 0, dx = 0, dy = 0, is_collideable = false }) {
             this.destroyed = false;
             this.x = x;
             this.y = y;
             this.dx = dx;
             this.dy = dy;
+            this.is_collideable = is_collideable;
         }
         destroy() {
             this.destroyed = true;
@@ -131,9 +132,8 @@ define([], function () {
 
     class Sprite extends Renderable {
         constructor({ image, x = 0, y = 0, dx = 0, dy = 0, is_collideable = true }) {
-            super({ x, y, dx, dy });
+            super({ x, y, dx, dy, is_collideable });
             this.image = image;
-            this.is_collideable = is_collideable;
         }
         get top() {
             return this.y;
@@ -160,7 +160,11 @@ define([], function () {
             this.x = right - this.width;
         }
         get overlapping_sprites() {
-            return games.screen.region(this).filter(obj => obj != this);
+            var region = games.screen.region(this).filter(obj => obj != this);
+            if (region.length === 0) {
+                return null;
+            }
+            return region;
         }
         set_image(image) {
             this.image = image;
@@ -206,17 +210,16 @@ define([], function () {
 
     class Sound {
         constructor({ loop = false, url }) {
+            this.loaded = false;
+            this.url = url;
             var sound = this.sound = document.createElement("audio");
             sound.loop = loop;
-            this.loaded = false;
-            sound.addEventListener('load', e => this.loaded = true);
+            sound.addEventListener('canplay', e => this.loaded = true);
             if (url) {
                 this.load(url);
             }
-            this.url = url;
         }
         load(url) {
-            this.url = url;
             this.loaded = false;
             this.sound.src = BASE_SOUND_URL + url;
             this.sound.load();
