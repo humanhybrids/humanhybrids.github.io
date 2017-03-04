@@ -1,0 +1,14 @@
+{
+    "name": "Pok\u00e9Kombat",
+    "icons": [
+        {
+            "src": "/pokekombat/android-chrome-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#d28787",
+    "background_color": "#d28787",
+    "display": "standalone",
+    "orientation": "landscape"
+}
