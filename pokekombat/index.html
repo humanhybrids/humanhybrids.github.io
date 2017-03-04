@@ -24,22 +24,63 @@
             padding: 0;
         }
 
-
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: black;
+            background-color: rgba(0,0,0,0.8);
         }
 
         .overlay {
             position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+
+        .overlay>* {
+            width: 33.33%;
+            height: 100%;
+            opacity: 0.2;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: 80%;
+        }
+        
+        canvas {
+            border: 15px solid black;
+            border-radius: 8px;
         }
     </style>
 </head>
 
 <body>
-    
+    <div class="overlay">
+        <div data-key="ArrowLeft" style="background-image: url('left_arrow.png');"></div>
+        <div data-key=" " style="background-image: url('fire.png');"></div>
+        <div data-key="ArrowRight" style="background-image: url('right_arrow.png');"></div>
+    </div>
+    <script>
+        function touchevent(e, type, key) {
+            document.body.dispatchEvent(new KeyboardEvent(type, { bubbles: true, cancelable: true, key: key }));
+            e.preventDefault();
+            console.log(e);
+        }
+        function start(e, key) {
+            touchevent(e, "keydown", key);
+        }
+        function end(e, key) {
+            touchevent(e, "keyup", key);
+        }
+        document.querySelectorAll(".overlay > *").forEach(function(element) {
+            element.addEventListener('touchstart', function(e) { start(e, element.dataset.key); });
+            element.addEventListener('touchend', function(e) { end(e, element.dataset.key); });
+        });
+    </script>
 </body>
 
 </html>
