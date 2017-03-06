@@ -2,7 +2,7 @@
   "name": "corycook.github.io",
   "version": "1.0.0",
   "description": "My personal web page",
-  "main": "gulpfile.js",
+  "main": "app.js",
   "dependencies": {
     "gulp": "^3.9.1"
   },

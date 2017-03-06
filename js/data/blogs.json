@@ -46,11 +46,20 @@
     },
     {
         "id": "webdev5",
-        "name": "JavaScript ES6",
+        "name": "JavaScript ES2015",
         "created": {
             "value": "2017-02-24 16:15 -0800",
             "format": "YYYY-MM-DD HH:mm Z"
         },
         "abstract": "An overview of new features in JavaScript ES6."
+    },
+    {
+        "id": "webdev6",
+        "name": "Transpiling ES2015 with Babel",
+        "created": {
+            "value": "2017-03-05 23:45 -0800",
+            "format": "YYYY-MM-DD HH:mm Z"
+        },
+        "abstract": "A short introduction to transpiling ES2015 code to browser-compatible JavaScript using Babel."
     }
 ]

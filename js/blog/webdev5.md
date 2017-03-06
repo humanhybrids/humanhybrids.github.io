@@ -1,13 +1,13 @@
 # Intro
 
-JavaScript ECMAScript 6 (ES6) is the (not so) latest implementation of the ES6 standard. 
-It was recently renamed to ES2015 to pressure browsers to more quickly integrate its 
-functionality into their environments. There is a newer standard ES7 (2016); however, 
-since browsers still haven't fully implemented ES6, we will hold off on discussing that for now.
+JavaScript ECMAScript 2015 (ES2015) is the (not so) latest implementation of the ES2015 standard. 
+It was recently renamed to ES2015 (from ES6) to pressure browsers to more quickly integrate its 
+functionality into their environments. There is a newer standard ES2016; however, 
+since browsers still haven't fully implemented ES2015, we will hold off on discussing that for now.
 
 # Features
 
-There are many new features added to JavaScript in ES6 including:
+There are many new features added to JavaScript in ES2015 including:
 
 - block scoping
 - constant variables
@@ -50,7 +50,7 @@ defined in scope then it will act as if you had declared it before hand without 
 is called [hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting). All variables declared are 
 declared in the compile phase of JS execution for the current scope and assigned during the execution phase.
 
-To better control variable scope ES6 has added the [`let`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let)
+To better control variable scope ES2015 has added the [`let`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let)
 keyword that you can use instead of `var`. `let` allows you to declare a variable that is only visible to the current block
 and only accessible after it is declared. Let's examine the previous example with let instead of var:
 
@@ -82,7 +82,7 @@ an exception since val is not defined at the first call to `testfn()`.
 
 ## Constant variables
 
-ES6 has also added the `const` keyword used similarly to the new `let` keyword except that it requires an initial assignment 
+ES2015 has also added the `const` keyword used similarly to the new `let` keyword except that it requires an initial assignment 
 and it cannot be reassigned after its initialization.
 
 ```JavaScript
@@ -139,7 +139,7 @@ This exands the array values as arguments to the new array initialization.
 
 ## Object Destructuring
 
-Object destructuring is one of the most unusual new features in ES6; however, it allows for much more 
+Object destructuring is one of the most unusual new features in ES2015; however, it allows for much more 
 succinct and clear JS code when used properly. Let's start by examining some of the issues with ES5
 that object destructuring aims to resolve.
 
@@ -157,7 +157,7 @@ var w = new Widget();
 
 Here we want to check if `text` is null (falsy) and if it is then use an empty string default value. Similarly, 
 the data object passed in may have id and name properties that we want to copy to this instance or use a default
-value. Code like this is very common in JavaScript ES5. So let's look at the ES6 alternative with object destructuring:
+value. Code like this is very common in JavaScript ES5. So let's look at the ES2015 alternative with object destructuring:
 
 ```JavaScript
 function Widget({ text = "", link, data: { id = -1, name = "placeholder" } = { } } = { }) {
@@ -296,7 +296,7 @@ This empties the `vals` array and prints the values sequentially.
 
 ## Classes
 
-The classes added in ES6 greatly simplify the syntax required to create object prototypes in JavaScript.
+The classes added in ES2015 greatly simplify the syntax required to create object prototypes in JavaScript.
 Here is the ES5 syntax for creating a type:
 
 ```JavaScript
@@ -324,7 +324,7 @@ This requires some auxilary knowledge:
 Admittedly, this is something most people learn early on; however, it isn't very intuitive. Especially if you have experience with
 traditional object oriented programming languages.
 
-ES6 gives us a more natural interface for creating types:
+ES2015 gives us a more natural interface for creating types:
 
 ```JavaScript
 class List extends Widget {
@@ -339,7 +339,7 @@ class List extends Widget {
 }
 ```
 
-If you compare the ES5 code with the ES6 code you should find that the new syntax is much easier to read and understand.
+If you compare the ES5 code with the ES2015 code you should find that the new syntax is much easier to read and understand.
 
 ## Arrow functions
 
@@ -363,7 +363,7 @@ function List() {
 
 We want to listen for the click event on the button and add an item to the list based on some user input. 
 We add an event listener to the button's click event, but the handler function needs to be bound to set the 
-this argument properly. Now in ES6 we can use arrow functions:
+this argument properly. Now in ES2015 we can use arrow functions:
 
 ```JavaScript
 class List extends Widget {

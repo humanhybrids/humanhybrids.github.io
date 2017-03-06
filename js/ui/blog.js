@@ -49,12 +49,16 @@ define([
             },
             set nodes(nodes) {
                 this.clear();
-                var lastTag = "H1";
+                var lastTag = 1;
                 nodes.forEach(function (node) {
-                    if (lastTag < node.tagName) {
+                    var level = Number.parseInt(/\d/.exec(node.tagName)[0]);
+                    while (lastTag < level) {
                         this.pushList();
-                    } else if (lastTag > node.tagName) {
+                        ++lastTag;
+                    }
+                    while (lastTag > level) {
                         this.popList();
+                        --lastTag;
                     }
                     this.push(Object.assign(document.createElement("a"), {
                         innerHTML: node.innerHTML,
@@ -63,7 +67,6 @@ define([
                                 function (y) { window.scrollTo(0, y); });
                         }
                     }));
-                    lastTag = node.tagName;
                 }, this);
                 this.classList.toggle("hidden", nodes.length);
             },
