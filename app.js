@@ -1,14 +1,19 @@
 
 var http = require("http");
 var fs = require("fs");
+var path = require("path");
+
 var server = http.createServer((req, res) => {
-    var fn = req.url.substring(1);
+    var fn = path.normalize(req.url).substring(1);
     try {
-        if (!fs.existsSync(fn)) {
-            throw null;
+        if (!fs.existsSync(fn) || fs.statSync(fn).isDirectory()) {
+            fn += (fn.length ? path.sep : '') + "index.html";
+            if (!fs.existsSync(fn))
+                throw fn;
         }
-        res.end(fs.readFileSync(fn));
+        fs.readFile(fn, (err, data) => res.end(data));
     } catch (e) {
+        console.error(e);
         res.statusCode = 404;
         res.end(`File not found: '${req.url}'`);
     }

@@ -25,12 +25,13 @@ This makes Node.js the perfect platform to write complex and efficient
 applications very quickly.
 
 At this point in time, this page is hosted on GitHub pages which only supports
-static content. So Python's `python -m http.server` is usually sufficient for
+static content. So Python's "`python -m http.server`" is usually sufficient for
 most development purposes; however, python's simple server does not support multiple
 concurrent connections. In order to test the site on multiple browsers it is 
 necessary to close one browser before opening another. To get around this slight 
 annoyance, it is possible to implement a simple server in Node:
 
+*app.js*
 ```JavaScript
 var http = require("http");
 var fs = require("fs");
@@ -251,7 +252,7 @@ gulp.task("babel", function() {
     var path = "js/**/*.js";
     var dest = "dist";
     compile(path, dest);
-    gulp.watch("js/**/*.js", function(event) {
+    gulp.watch(path, function(event) {
         compile(event.path, dest);
     });
 });
