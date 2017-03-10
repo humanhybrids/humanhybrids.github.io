@@ -1,0 +1,21 @@
+{
+  "name": "bluemix.corycook.github.io",
+  "version": "1.0.0",
+  "description": "Backend services for my web app.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Cory Cook",
+  "license": "ISC",
+  "repository": {
+    "url": "https://github.com/corycook/corycook.github.io"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cfenv": "^1.0.4",
+    "cloudant": "^1.7.1",
+    "express": "^4.15.2"
+  }
+}

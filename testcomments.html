@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Test Comments</title>
+</head>
+
+<body>
+
+    <template id="comment">
+        <div>
+            <span data-id="name"></span>: <span data-id="text"></span>
+        </div>
+    </template>
+
+    <form method="POST" action="http://corycook.mybluemix.net/api/comments">
+        <label>Name: <input type="text" name="name"></label>
+        <label>Text: <input type="text" name="text"></label>
+        <button type="submit">Add</button>
+    </form>
+
+    <div id="comments">
+    </div>
+
+    <script>
+        var template = document.getElementById("comment");
+        var comments = document.getElementById("comments");
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://corycook.mybluemix.net/api/comments");
+        xhr.addEventListener("readystatechange", function () {
+            if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                for (let item of data) {
+                    let html = document.importNode(template.content, true);
+                    for (let key in item) {
+                        let node = html.querySelector(`[data-id=${key}]`);
+                        if (node) {
+                            node.innerHTML = item[key];
+                        }
+                    }
+                    comments.appendChild(html);
+                }
+            }
+        });
+
+        xhr.send();
+    </script>
+
+</body>
+
+</html>
