@@ -1,67 +1,42 @@
 var express = require("express");
-var cfenv = require("cfenv");
 var bodyParser = require("body-parser");
-var vcapLocal = require("./vcap-local.json");
-var env = cfenv.getAppEnv({ vcap: vcapLocal });
 
 var app = express();
 
+var srv = require("http").createServer(app);
+var io = require("socket.io")(srv);
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.text());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-const DBNAME = "comments";
-var db;
+var rules = [];
 
-if (env.services["cloudantNoSQLDB"]) {
-    var cloudant = require("cloudant")(env.services["cloudantNoSQLDB"][0].credentials);
-    cloudant.db.create(DBNAME, function (err) {
-        if (!err) {
-            console.log(`Database created: ${DBNAME}.`);
-        }
-    });
-    db = cloudant.db.use(DBNAME);
-}
+app.get("/api/rules", function(req, res) {
+    res.json(rules);
+})
 
-app.get("/api/comments", function (req, res) {
-    var comments = [];
-    if (!db) {
-        return res.json(comments);
-    }
-    db.list({ include_docs: true }, function (err, body) {
-        if (!err) {
-            for (var comment of body.rows) {
-                comments.push({ name: comment.doc.name, text: comment.doc.text });
-            }
-            res.json(comments);
-        }
-    });
+app.post("/api/rules", function (req, res) {
+    rules.push(req.body);
+    io.emit("rule", req.body);
+    res.write(req.body);
 });
 
-app.post("/api/comments", function (req, res) {
-    if (db) {
-        db.insert(req.body, function (err, body) {
-            if (err) {
-                console.warn(`[db.insert] ${err.message}`);
-            }
-            res.json(req.body);
-        });
-    }
+app.delete("/api/rules/:id", function(req, res) {
+    var deleted = rules.splice(req.params.id, 1);
+    res.json(deleted);
 });
 
-app.delete("/api/comments", function (req, res) {
-
+io.on("connection", function (socket) {
+    socket.on("chat", msg => io.emit("chat", msg));
 });
 
-app.get("/", function (req, res) {
-    res.send("Application running!");
-});
+app.use(express.static(__dirname + "/../"));
 
 var port = process.env.PORT || 3000
-app.listen(port, function () {
-    console.log("To view your app, open this link in your browser: http://localhost:" + port);
-});
+srv.listen(port);

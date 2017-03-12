@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title></title>
+    <script src="http://corycook.mybluemix.net/socket.io/socket.io.js"></script>
+    <script>
+        (function (exports) {
+            exports.xhr = function xhr(method, url, data) {
+                return new Promise(function (resolve, reject) {
+                    var req = new XMLHttpRequest();
+                    req.open(method, url);
+                    req.addEventListener("readystatechange", function (e) {
+                        if (req.readyState === req.DONE) {
+                            if (req.status === 200) {
+                                resolve(req.response);
+                            } else {
+                                reject(req.response);
+                            }
+                        }
+                    });
+                    if (typeof data === "object") {
+                        data = JSON.stringify(data);
+                        req.setRequestHeader("Content-Type", "application/json");
+                    }
+                    req.send(data);
+                });
+            }
+
+            var log = exports.log = [];
+
+            function exec(str) {
+                log.push(str);
+                eval(str);
+            }
+
+            xhr("GET", "http://corycook.mybluemix.net/api/rules").then(function (rules) {
+                JSON.parse(rules).forEach(exec);
+            });
+
+            var socket = io("http://corycook.mybluemix.net/");
+            socket.on("chat", function (msg) { console.log(msg); });
+            socket.on("rule", exec);
+
+            exports.chat = function chat(msg) { socket.emit("chat", msg); }
+            exports.run = function run(rule) {
+                if (typeof rule === "function") {
+                    rule = "(${" + rule.toString() + "})()";
+                }
+                xhr("POST", "http://corycook.mybluemix.net/api/rules", rule);
+            }
+
+            var _filein = Object.assign(document.createElement("input"), { type: "file" });
+            var _reader = new FileReader();
+            _reader.addEventListener("load", function (e) {
+                run(e.target.result);
+            });
+            exports.open = function open() {
+                _filein.addEventListener("change", function (e) {
+                    var files = this.files;
+                    for (var i = 0; i < files.length; i++) {
+                        _reader.readAsText(files[i]);
+                    }
+                });
+                _filein.click();
+            }
+        })(window);
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
