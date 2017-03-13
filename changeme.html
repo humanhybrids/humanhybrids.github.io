@@ -4,7 +4,7 @@
 
 <head>
     <title></title>
-    <script src="http://corycook.mybluemix.net/socket.io/socket.io.js"></script>
+    <script src="//corycook.mybluemix.net/socket.io/socket.io.js"></script>
     <script>
         (function (exports) {
             exports.xhr = function xhr(method, url, data) {
@@ -35,11 +35,11 @@
                 eval(str);
             }
 
-            xhr("GET", "http://corycook.mybluemix.net/api/rules").then(function (rules) {
+            xhr("GET", "//corycook.mybluemix.net/api/rules").then(function (rules) {
                 JSON.parse(rules).forEach(exec);
             });
 
-            var socket = io("http://corycook.mybluemix.net/");
+            var socket = io("//corycook.mybluemix.net/");
             socket.on("chat", function (msg) { console.log(msg); });
             socket.on("rule", exec);
 
@@ -48,7 +48,7 @@
                 if (typeof rule === "function") {
                     rule = "(${" + rule.toString() + "})()";
                 }
-                xhr("POST", "http://corycook.mybluemix.net/api/rules", rule);
+                xhr("POST", "//corycook.mybluemix.net/api/rules", rule);
             }
 
             var _filein = Object.assign(document.createElement("input"), { type: "file" });
