@@ -61,5 +61,14 @@
             "format": "YYYY-MM-DD HH:mm Z"
         },
         "abstract": "A short introduction to transpiling ES2015 code to browser-compatible JavaScript using Babel."
+    },
+    {
+        "id": "nodecli",
+        "name": "Node Package Manager and Linking CLIs",
+        "created": {
+            "value": "2017-04-04 13:00 -0800",
+            "format": "YYYY-MM-DD HH:mm Z"
+        },
+        "abstract": "An overview of common npm commands including the link command to create command line utilities from Node scripts."
     }
 ]
