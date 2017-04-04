@@ -8,9 +8,9 @@ dependencies so that you don't have to pack your dependencies with your code. Wh
 
 ## npm install
 
- ```
-> npm install {package}
- ```
+```
+npm install {package}
+```
 
 Installs the package provided as an argument to the node_modules folder so that 
 it can be loaded by Node via ```require('{package}')```.
