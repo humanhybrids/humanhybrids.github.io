@@ -1,12 +1,4 @@
-
 Here is a quick overview of what Node's package manager can do.
-
-- [init](#npminit)
-- [install](#npminstall)
-- [uninstall](#npmuninstall)
-- [list](#npmlist)
-- [version](#npmversion)
-- [link](#npmlink)
 
 ## npm init
 
