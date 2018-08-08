@@ -1,0 +1,19 @@
+@import url("/main.scss");
+
+section {
+  display: flex;
+  flex-direction: column wrap;
+  flex-wrap: wrap;
+  align-items: center;
+
+  img {
+    flex: 0 0 100%;
+    max-width: 100%;
+
+    @media (min-width: 800px) {
+      &.portrait {
+        max-width: 50%;
+      }
+    }
+  }
+}

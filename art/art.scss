@@ -1,0 +1,28 @@
+@import url("/main.scss");
+
+section {
+  display: flex;
+  flex-wrap: wrap;
+
+  div {
+    flex: 1 1 600px;
+    margin: 0.2rem;
+
+    a {
+      color: white;
+      position: relative;
+
+      img,
+      video {
+        max-width: 100%;
+      }
+
+      div {
+        font-size: 3rem;
+        position: absolute;
+        bottom: 0.5rem;
+        left: 0.5rem;
+      }
+    }
+  }
+}
