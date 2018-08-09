@@ -22,7 +22,7 @@ nav {
       color: $linkColor;
     }
     &:hover {
-      color: hue($linkColor);
+      color: lighten($linkColor, 50%);
     }
   }
 }

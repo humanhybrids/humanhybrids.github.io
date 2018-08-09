@@ -14,7 +14,7 @@ nav {
     nav a:visited {
       color: #333; }
     nav a:hover {
-      color: 0deg; }
+      color: #b3b3b3; }
 
 header {
   display: flex;
