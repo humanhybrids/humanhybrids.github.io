@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "parcel build index.html",
     "build-images": "gulp generate-images --require=ts-node/register",
-    "server": "parcel index.html"
+    "server": "parcel watch index.html"
   },
   "repository": {
     "type": "git",
