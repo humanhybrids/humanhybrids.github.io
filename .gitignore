@@ -6,3 +6,4 @@ bower_components
 .vscode
 npm-debug.log
 .cache/
+dist/
