@@ -14,9 +14,10 @@ class Header extends HTMLElement {
       }
       a {
         text-decoration: none;
+        color: inherit;
       }
     </style>
-    <h1>humanhybrids</h1>
+    <h1><a href="/index.html">humanhybrids</a></h1>
     <slot></slot>
     <nav>
       <a href="/index.html">Home</a>
