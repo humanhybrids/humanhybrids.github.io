@@ -5,9 +5,9 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build index.html blog.html",
+    "build": "parcel build index.html blog.html blog2.html",
     "build-images": "gulp generate-images --require=ts-node/register",
-    "server": "parcel index.html blog.html"
+    "server": "parcel index.html blog.html blog2.html"
   },
   "repository": {
     "type": "git",
