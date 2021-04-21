@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function getCurrentPage(pages) {
   const href = window.location.href || "";
-  return pages.find(page => href.includes(page.url));
+  return pages.find(page => href.includes(page.url)) || pages[0];
 }
 
 export function Nav({ pages = [] }) {
@@ -53,7 +53,7 @@ export function Nav({ pages = [] }) {
       {currentPage.showName && <h2>{currentPage.name}</h2>}
       <section>
         {pages.map(page => (
-          <a key={page.url} href={`../${page.url}.html`}
+          <a key={page.url} href={`/${page.url}.html`}
             className={currentPage.url == page.url ? "selected" : ""}>
             {page.name}
           </a>

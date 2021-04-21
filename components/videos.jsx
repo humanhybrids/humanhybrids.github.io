@@ -60,7 +60,6 @@ export function Videos() {
   return (
     <Layout>
       <Gallery
-        autoPlay={false}
         columns={1}
         onClose={pauseVideo}
         onChangeIndex={pauseVideo}

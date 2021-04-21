@@ -35,9 +35,9 @@ const theme = createMuiTheme({
 const pages = [
   { url: "index", name: "Home", showName: false },
   { url: "photos", name: "Photos", showName: true },
-  { url: "videos2", name: "Videos", showName: true },
-  { url: "socialmedia2", name: "Social Media", showName: true },
-  { url: "design2", name: "Graphic Design", showName: true },
+  { url: "videos", name: "Videos", showName: true },
+  { url: "socialmedia", name: "Social Media", showName: true },
+  { url: "design", name: "Graphic Design", showName: true },
 ];
 
 export function Layout({ children }) {
