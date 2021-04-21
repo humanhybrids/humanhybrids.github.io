@@ -5,9 +5,9 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build index.html gallery.html videos.html images-lg/*",
+    "build": "parcel build index.html photos.html videos2.html socialmedia2.html design2.html images-lg/* images-sm/*",
     "build-images": "gulp generate-images --require=ts-node/register",
-    "server": "parcel index.html gallery.html videos.html images-lg/*"
+    "server": "parcel index.html photos.html videos2.html socialmedia2.html design2.html images-lg/* images-sm/*"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,9 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
-    "react": "17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^15.3.0 || ^16.0.0",
+    "react-dom": "^17.0.2",
+    "react-swipeable-views": "^0.13.9",
+    "react-swipeable-views-utils": "^0.14.0-alpha.0"
   }
 }
