@@ -34,6 +34,7 @@ const theme = createMuiTheme({
 
 const pages = [
   { url: "index", name: "Home", showName: false },
+  { url: "about", name: "About", showName: true },
   { url: "photos", name: "Photos", showName: true },
   { url: "videos", name: "Videos", showName: true },
   { url: "socialmedia", name: "Social Media", showName: true },
