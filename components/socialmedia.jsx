@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Layout } from './layout.jsx';
 import { Gallery } from './gallery.jsx';
+import { Hidden } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -25,34 +26,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const images = [
-  { url: "1" },
-  { url: "2" },
-  { url: "3" },
-  { url: "5" },
-  { url: "6" },
-  { url: "7" },
-  { url: "8" },
-  { url: "9" },
-  { url: "10" },
-  { url: "11" },
-  { url: "12" },
+  { url: "social-ala" },
+  { url: "social-art-class" },
+  { url: "social-class" },
+  { url: "social-commencement" },
+  { url: "social-gallim" },
+  { url: "social-gallim-why" },
+  { url: "social-gender" },
+  { url: "social-grad-deadline" },
+  { url: "social-greg" },
+  { url: "social-hands" },
+  { url: "social-powers" },
+  { url: "social-smd" },
+  // { url: "social-shelea" },
+  { url: "social-woody" },
+  { url: "social-yellow" },
 ];
 
 export function SocialMedia() {
   const classes = useStyles();
 
+  const thumbnails = images.map((image) => ({
+    id: image.url,
+    component: <img src={`../images-sm/${image.url}-sm.jpg`} />,
+  }));
+
+  const maxItems = images.map((image) => ({
+    id: image.url,
+    component: <img className={classes.maxSize} src={`../images-lg/${image.url}.jpg`} />,
+  }));
+
   return (
     <Layout>
-      <Gallery
-        columns={2}
-        items={images.map((image) => ({
-          id: image.url,
-          component: <img src={`../images-sm/${image.url}.jpg`} />,
-        }))}
-        maxItems={images.map((image) => ({
-          id: image.url,
-          component: <img className={classes.maxSize} src={`../images-lg/${image.url}.jpg`} />,
-        }))} />
+      <Hidden smUp>
+        <Gallery
+          columns={1}
+          items={thumbnails}
+          maxItems={maxItems} />
+      </Hidden>
+      <Hidden xsDown>
+        <Gallery
+          columns={3}
+          items={thumbnails}
+          maxItems={maxItems} />
+      </Hidden>
     </Layout>
   );
 }

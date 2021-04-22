@@ -37,7 +37,7 @@ const pages = [
   { url: "photos", name: "Photos", showName: true },
   { url: "videos", name: "Videos", showName: true },
   { url: "socialmedia", name: "Social Media", showName: true },
-  { url: "design", name: "Graphic Design", showName: true },
+  { url: "design", name: "Digital Media", showName: true },
 ];
 
 export function Layout({ children }) {

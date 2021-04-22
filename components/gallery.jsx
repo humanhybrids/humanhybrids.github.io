@@ -33,6 +33,7 @@ export function Gallery({
   items = [],
   maxItems = [],
   autoPlay = false,
+  cellHeight = 360,
   columns = 3,
   onChangeIndex = (index) => { },
   onClose = () => { },
@@ -60,7 +61,7 @@ export function Gallery({
 
   return (
     <>
-      <GridList cellHeight={360} cols={columns}>
+      <GridList cellHeight={cellHeight} cols={columns}>
         {items.map((item, index) => (
           <GridListTile className={classes.gridItem} key={item.id} cols={1}
             onClick={() => setIndex(index)}>
