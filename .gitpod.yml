@@ -1,4 +1,12 @@
-vscode:
-  extensions:
-    - stkb.rewrap@1.14.0:62bfe4089a34c6db531db35679f8eb56
-    - earshinov.permute-lines@1.1.0:8a3ce5a132bb60748a5f644d9e579438
+image:
+  file: .gitpod.Dockerfile
+
+# List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 1234
+    onOpen: open-preview
+
+# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - init: echo 'init script' # runs during prebuild
+    command: echo 'start script'

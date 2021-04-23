@@ -42,6 +42,23 @@ const images = [
   { url: "bear" },
   { url: "Davis-5085" },
   { url: "Davis-5075" },
+  { url: "photos-yosemite" },
+  { url: "photos-wander" },
+  { url: "photos-violin" },
+  { url: "photos-sing" },
+  { url: "photos-shalea" },
+  { url: "photos-jazz" },
+  { url: "photos-concert" },
+  { url: "photos-pumpkins" },
+  { url: "photos-peace" },
+  { url: "photos-melissa" },
+  { url: "photos-hands" },
+  { url: "photos-glass" },
+  { url: "photos-glass-2" },
+  { url: "photos-gallery" },
+  { url: "photos-foot" },
+  { url: "photos-atuesday" },
+  { url: "photos-art-room" },
 ];
 
 export function Photos() {
