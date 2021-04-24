@@ -26,24 +26,37 @@ const useStyles = makeStyles((theme) => ({
 
 const videos = [
   {
-    url: "../videos/Final Montage - End Credits-small.mp4",
-    thumbnail: "../images-sm/Copy of still.jpg"
+    url: "/videos/Final Montage - End Credits-small.mp4",
+    thumbnail: "/images-sm/Copy of still.jpg",
   },
   {
-    url: "../videos/WebsiteVideo-small.mp4",
-    thumbnail: "../images-sm/2video.jpg"
+    url: "/videos/WebsiteVideo-small.mp4",
+    thumbnail: "/images-sm/2video.jpg",
   },
   {
-    url: "../videos/Join the DMA Program at SJSU-small.mp4",
-    thumbnail: "../images-sm/pic1.jpg"
+    url: "/videos/Join the DMA Program at SJSU-small.mp4",
+    thumbnail: "/images-sm/pic1.jpg",
   },
   {
-    url: "../videos/MarchingBandPromoUpdated-small.mp4",
-    thumbnail: "../images-sm/bandnew.jpg"
+    url: "/videos/MarchingBandPromoUpdated-small.mp4",
+    thumbnail: "/images-sm/bandnew.jpg",
   },
   {
-    url: "../videos/StarWarsIGstory-small.mp4",
-    thumbnail: "../images-sm/4thbewith.jpg"
+    url: "/videos/StarWarsIGstory-small.mp4",
+    thumbnail: "/images-sm/4thbewith.jpg",
+  },
+  {
+    url: "//player.vimeo.com/video/209441623",
+    component: () => (
+      <iframe title="vimeo-player" frameBorder="0" allowFullScreen
+        src="//player.vimeo.com/video/209441623" width="640" height="360">
+      </iframe>
+    ),
+    thumbnail: "/images-sm/videos-yellow.jpg",
+  },
+  {
+    url: "/videos/videos-smdredux-small.mp4",
+    thumbnail: "/images-sm/videos-smdredux.jpg",
   },
 ];
 
@@ -69,7 +82,7 @@ export function Videos() {
         }))}
         maxItems={videos.map((video) => ({
           id: video.url,
-          component: (
+          component: video.component?.(classes) || (
             <video onClick={e => e.stopPropagation()} src={video.url} controls
               className={classes.maxSize} onPlay={(e) => setPlayingVideo(e.target)} >
             </video>

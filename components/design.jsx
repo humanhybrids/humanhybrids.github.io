@@ -30,6 +30,22 @@ const images = [
   { url: "PosterPrint3.jpg" },
   { url: "4.jpg" },
   { url: "still.jpg" },
+  {
+    url: "jazzgif.jpg",
+    component: (classes) => (
+      <video autoPlay loop muted playsInline src="/videos/jazzgif.mp4"
+        className={classes.maxSize}>
+      </video>
+    ),
+  },
+  {
+    url: "sunrays.jpg",
+    component: (classes) => (
+      <video autoPlay loop muted playsInline src="/videos/sunrays.mp4"
+        className={classes.maxSize}>
+      </video>
+    ),
+  },
 ];
 
 export function SocialMedia() {
@@ -40,11 +56,13 @@ export function SocialMedia() {
       <Gallery
         items={images.map((image) => ({
           id: image.url,
-          component: <img src={`../images-sm/${image.url}`} />,
+          component: <img src={`/images-sm/${image.url}`} />,
         }))}
         maxItems={images.map((image) => ({
           id: image.url,
-          component: <img className={classes.maxSize} src={`../images-lg/${image.url}`} />,
+          component: image.component?.(classes) || (
+            <img className={classes.maxSize} src={`/images-lg/${image.url}`} />
+          ),
         }))} />
     </Layout>
   );
