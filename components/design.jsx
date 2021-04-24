@@ -33,20 +33,32 @@ const images = [
   {
     url: "jazzgif.jpg",
     component: (classes) => (
-      <video autoPlay loop muted playsInline src="/videos/jazzgif.mp4"
-        className={classes.maxSize}>
-      </video>
+      <Video src="/videos/jazzgif.mp4" className={classes.maxSize} />
     ),
   },
   {
     url: "sunrays.jpg",
     component: (classes) => (
-      <video autoPlay loop muted playsInline src="/videos/sunrays.mp4"
-        className={classes.maxSize}>
-      </video>
+      <Video src="/videos/sunrays.mp4" className={classes.maxSize} />
+    ),
+  },
+  {
+    url: "sjsu-galleries-arts.jpg",
+    component: (classes) => (
+      <Video src="/videos/sjsu-galleries-arts.mp4" className={classes.maxSize} />
+    ),
+  },
+  {
+    url: "welcomeback.jpg",
+    component: (classes) => (
+      <Video src="/videos/welcomeback.mp4" className={classes.maxSize} />
     ),
   },
 ];
+
+function Video(props) {
+  return <video autoPlay loop muted playsInline {...props}></video>;
+}
 
 export function SocialMedia() {
   const classes = useStyles();
